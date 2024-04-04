@@ -1,0 +1,160 @@
+{# @ratings/admin/view.html.twig #}
+
+{% block view %}
+{{ include('@ratings/includes/admin-mod-head.html.twig') }}
+    <div class="xar-mod-body">
+        <h2>View Statistics</h2><br />
+        {% if not modid %}
+            <table class="xar-fullwidth">
+                <tr>
+                    <th>
+                        Module Name
+                    </th>
+                    <th>
+                        Module Items
+                    </th>
+                    <th>
+                        Total Ratings
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+                {% if not moditems or moditems|length == '0' %}
+                    <tr>
+                        <td colspan="4" align="center">
+                            
+                                There are currently no ratings in the database...
+                            
+                        </td>
+                    </tr>
+                {% else %}
+                    {% for moditem in moditems %}
+                        <tr>
+                               <td class="xar-align-center">
+                                <a href="{{ moditem['link'] }}">{{ moditem['name'] }}</a>
+                            </td>
+                                <td class="xar-align-center">
+                                {{ moditem['numitems'] }}
+                            </td>
+                                <td class="xar-align-center">
+                                {{ moditem['numratings'] }}
+                            </td>
+                                <td class="xar-align-center">
+                                <a href="{{ moditem['delete'] }}"><b>Delete</b></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                            <td class="xar-align-center">
+                            <b>Grand Total</b>
+                        </td>
+                            <td class="xar-align-center">
+                            <b>{{ numitems }}</b>
+                        </td>
+                            <td class="xar-align-center">
+                            <b>{{ numratings }}</b>
+                        </td>
+                            <td class="xar-align-center">
+                            <a href="{{ delete }}">Delete All</a>
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td colspan="4">
+                            <div class="xar-accent xar-norm-outline xar-padding-thick">
+                            
+                                By clicking on <b>Delete</b> you can delete all ratings associated with a particular
+                                module. Clicking on a module will take you to that module's statistics page containing
+                                the figures for each of that module's items that have ratings associated with them.
+                                From there you can delete all ratings associated with a particular item.
+                            
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        {% else %}
+                <h3>
+                    {{ xar_translate('Module #(1)', modname) }}
+                </h3>
+                <table class="xar-fullwidth">
+                    <tr>
+                        <th>
+                            {% if not sortlink['itemid'] %}
+                                Item Id
+                            {% else %}
+                                <a href="{{ sortlink['itemid'] }}">Item Id</a>
+                            {% endif %}
+                        </th>
+                        <th>
+                            {% if not sortlink['numratings'] %}
+                                Total Ratings
+                            {% else %}
+                                <a href="{{ sortlink['numratings'] }}">Total Ratings</a>
+                            {% endif %}
+                        </th>
+                        <th>
+                            {% if not sortlink['rating'] %}
+                                Current Rating
+                            {% else %}
+                                <a href="{{ sortlink['rating'] }}">Current Rating</a>
+                            {% endif %}
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                    {% if not moditems or moditems|length == '0' %}
+                        <tr>
+                            <td colspan="4" align="center">
+                                
+                                    There are currently no ratings attached to this module...
+                                
+                            </td>
+                        </tr>
+                    {% else %}
+                        {% for itemid, moditem in moditems %}
+                            <tr>
+                                <td class="xar-align-center">
+                                    {{ itemid }}
+                                </td>
+                                <td class="xar-align-center">
+                                    {{ moditem['numratings'] }}
+                                </td>
+                                <td class="xar-align-center">
+                                    {{ moditem['rating'] }}
+                                </td>
+                                <td class="xar-align-center">
+                                    <a href="{{ moditem['delete'] }}"><b>Delete</b></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td class="xar-align-center">
+                                <b>Grand Total</b>:
+                            </td>
+                            <td class="xar-align-center">
+                                <b>{{ numratings }}</b>
+                            </td>
+                            <td class="xar-align-center">
+                                <b>N/A</b>
+                            </td>
+                            <td class="xar-align-center">
+                                <a href="{{ delete }}">Delete All</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="xar-accent xar-norm-outline xar-padding-thick">
+                                
+                                    By clicking on <b>Delete</b> you can delete all ratings associated with a particular
+                                    module's item.
+                                
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+        {% endif %}
+    </div>
+{% endblock %}

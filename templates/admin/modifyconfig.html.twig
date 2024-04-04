@@ -1,0 +1,63 @@
+{# @ratings/admin/modifyconfig.html.twig #}
+
+{% block modifyconfig %}
+{{ include('@ratings/includes/admin-mod-head.html.twig') }}
+    <div class="xar-mod-body">
+        <h2>Modify Configuration</h2>
+        {% if tab == 'general' %}
+            <form action="&xar-modurl-ratings-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
+                <fieldset>
+                    <legend>
+                        General Options
+                    </legend>
+                    {{ xar_data_form({object: module_settings}) }}
+                </fieldset>
+                {% set confcounter = 1 %}
+                {% for modname, config in settings %}
+                    <fieldset>
+                        <legend>
+                            {{ config['label'] }}
+                        </legend>
+                        <div class="xar-form-input-wrapper">
+                            <label for="ratingsstyle_{{ confcounter }}" class="xar-form-label">
+                                Rating Style:
+                            </label>
+                            {% set options = xar_apifunc('ratings','user','getstyles') %}
+                            {% set ratingname = 'ratingsstyle[' ~ modname ~ ']' %}
+                            {% set id = 'ratingsstyle_' ~ modname %}
+                            {% set options = xar_apifunc('ratings','user','getstyles') %}
+                            {{ xar_data_input({type: "dropdown", name: ratingname, id: id, options: options, value: config['ratingsstyle']}) }}
+                        </div>
+                        <div class="xar-form-input-wrapper">
+                          <label for="seclevel_{{ confcounter }}" class="xar-form-label">
+                                Security Level:
+                            </label>
+                            <select name="seclevel[{{ modname }}]" id="seclevel_{{ confcounter }}">
+                            {% for option in secleveloptions %}
+                                {% if option['id'] == config['seclevel'] %}
+                                    <option value="{{ option['id'] }}" selected="selected">{{ option['name'] }}</option>
+                                {% else %}
+                                    <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                {% endif %}
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <div class="xar-form-input-wrapper-after">
+                            {% if config['shownum'] == 1 %}
+                                <input type="checkbox" name="shownum[{{ modname }}]" id="shownum_{{ confcounter }}" value="1" checked="checked" />
+                            {% else %}
+                                <input type="checkbox" name="shownum[{{ modname }}]" id="shownum_{{ confcounter }}" value="1" />
+                            {% endif %}
+                            <label for="shownum_{{ confcounter }}">
+                                Show number of ratings
+                            </label>
+                        </div>
+                    </fieldset>
+                    {% set confcounter = confcounter + 1 %}
+                {% endfor %}
+                <input type="hidden" name="tab" id="tab" value="{{ tab }}"/>
+                {{ include('@base/includes/update-button.html.twig') }}
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{# @ratings/admin/delete.html.twig #}
+
+{% block delete %}
+{{ include('@ratings/includes/admin-mod-head.html.twig') }}
+    <div class="xar-mod-body">
+        <h2>Delete Ratings</h2>
+        <form name="post" id="post" action="&xar-modurl-ratings-admin-delete;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
+            <legend>
+                Delete Confirmation
+            </legend>
+        <div class="xar-form-input-wrapper-before">
+    {% if not modname %}
+        Are you sure you want to delete all ratings ?
+    {% elseif not itemid %}
+        {{ xar_translate('Are you sure you want to delete all ratings for module', modname) }}
+    {% else %}
+        {{ xar_translate('Are you sure you want to delete all ratings for module', modname, itemid) }}
+    {% endif %}
+        </div>
+        </fieldset>
+        <input type="hidden" name="authid" id="authid" value="{{ authid }}" />
+        <input type="hidden" name="modid" id="modid" value="{{ modid }}" />
+        <input type="hidden" name="itemtype" id="itemtype" value="{{ itemtype }}" />
+        <input type="hidden" name="itemid" id="itemid" value="{{ itemid }}" />
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" name="confirm" value="{{ xar_translate('Confirm') }}" />
+            </div>
+        </form>
+    </div>
+{% endblock %}

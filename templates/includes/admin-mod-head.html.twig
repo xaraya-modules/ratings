@@ -1,0 +1,14 @@
+{# @ratings/includes/admin-mod-head.html.twig #}
+
+{% block admin_mod_head %}
+<div class="xar-mod-head">
+        <span class="xar-mod-title">
+            {% if xar_modulevar('ratings', 'use_module_alias') %}
+                {{ xar_var({scope: "module", module: "ratings", name: "module_alias_name"}) }}
+            {% else %}
+                Ratings Administration
+            {% endif %}
+        </span>
+        {{ include('@ratings/includes/admin-menu.html.twig') }}
+    </div>
+{% endblock %}

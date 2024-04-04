@@ -1,0 +1,129 @@
+{# @ratings/display.html.twig #}
+
+{% extends '@ratings/base.html.twig' %}
+
+{% block modulespace %}
+<div>
+        {% if showdisplay == 1 %}
+            Ratings&#160;
+            {% if ratingsstyle == 'percentage' %}
+                {{ rating }} %
+            {% elseif ratingsstyle == 'outoffive' %}
+                {{ rating }}/5
+            {% elseif ratingsstyle == 'outoffivestars' %}
+                {% for i in range(1, 5) %}
+                    {% if i <= intrating %}
+                        <img src="{{ xar_imageurl('star.gif','ratings') }}" alt="{{ xar_translate('star') }}" />
+                    {% elseif ((i - 1) == intrating) and fracrating >= 10 %}
+                        <img src="{{ xar_imageurl('halfstar.gif','ratings') }}" alt="{{ xar_translate('half star') }}" />
+                    {% else %}
+                        <img src="{{ xar_imageurl('nostar.gif','ratings') }}" alt="{{ xar_translate('no star') }}" />
+                    {% endif %}
+                {% endfor %}
+            {% elseif ratingsstyle == 'outoften' %}
+                {{ rating }}/10
+            {% elseif ratingsstyle == 'outoftenstars' %}
+                {% for i in range(1, 10) %}
+                    {% if i <= intrating %}
+                        <img src="{{ xar_imageurl('star.gif','ratings') }}" alt="{{ xar_translate('star') }}" />
+                    {% elseif ((i - 1) == intrating) and fracrating >= 5 %}
+                        <img src="{{ xar_imageurl('halfstar.gif','ratings') }}" alt="{{ xar_translate('half star') }}" />
+                    {% else %}
+                        <img src="{{ xar_imageurl('nostar.gif','ratings') }}" alt="{{ xar_translate('no star') }}" />
+                    {% endif %}
+                {% endfor %}
+            {% elseif ratingsstyle == 'customised' %}
+                {% if rating > 80 %}
+                    <strong>Excellent</strong>
+                {% elseif rating > 60 %}
+                    <strong>Good</strong>
+                {% elseif rating > 40 %}
+                    <strong>Average</strong>
+                {% elseif rating > 20 %}
+                    <strong>Bad</strong>
+                {% else %}
+                    <strong>Very Bad</strong>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+        {% if shownum == 1 %}
+            <div>
+                {{ xar_translate('Number of ratings: #(1)', numratings) }}
+            </div>
+        {% endif %}
+        {% if (rated is null) and showinput == 1 %}
+            {% if xar_security_check('CommentRatings',0) %}
+                <form method="post" action="&xar-modurl-ratings-user-rate;" id="post" enctype="application/x-www-form-urlencoded" >
+                    <div>
+                        {% set label = 'Rate this Item' %}
+                        {{- xar_button({type: "submit", label: label}) -}}
+    
+                        {% if ratingsstyle == 'percentage' %}
+                            <input type="text" name="rating" id="rating" value="" size="3" maxlength="3" /> %
+                        {% elseif ratingsstyle == 'outoffive' %}
+                            <select name="rating" id="rating" size="1">
+                                <option value="0">0</option>
+                                <option value="20">1</option>
+                                <option value="40">2</option>
+                                <option value="60" selected="selected">3</option>
+                                <option value="80">4</option>
+                                <option value="100">5</option>
+                            </select>
+                        {% elseif ratingsstyle == 'outoffivestars' %}
+                            <select name="rating" id="rating" size="1">
+                                <option value="0">0</option>
+                                <option value="20">1</option>
+                                <option value="40">2</option>
+                                <option value="60" selected="selected">3</option>
+                                <option value="80">4</option>
+                                <option value="100">5</option>
+                            </select>
+                        {% elseif ratingsstyle == 'outoften' %}
+                            <select name="rating" id="rating" size="1">
+                                <option value="0">0</option>
+                                <option value="10">1</option>
+                                <option value="20">2</option>
+                                <option value="30">3</option>
+                                <option value="40">4</option>
+                                <option value="50" selected="selected">5</option>
+                                <option value="60">6</option>
+                                <option value="70">7</option>
+                                <option value="80">8</option>
+                                <option value="90">9</option>
+                                <option value="100">10</option>
+                            </select>
+                        {% elseif ratingsstyle == 'outoftenstars' %}
+                            <select name="rating" id="rating" size="1">
+                                <option value="0">0</option>
+                                <option value="10">1</option>
+                                <option value="20">2</option>
+                                <option value="30">3</option>
+                                <option value="40">4</option>
+                                <option value="50" selected="selected">5</option>
+                                <option value="60">6</option>
+                                <option value="70">7</option>
+                                <option value="80">8</option>
+                                <option value="90">9</option>
+                                <option value="100">10</option>
+                            </select>
+                        {% elseif ratingsstyle == 'customised' %}
+                            <select name="rating" id="rating" size="1">
+                                <option value="90">Excellent</option>
+                                <option value="70">Good</option>
+                                <option value="50" selected="selected">Average</option>
+                                <option value="30">Bad</option>
+                                <option value="10">Very Bad</option>
+                            </select>
+                        {% endif %}
+    
+                        <input type="hidden" name="returnurl" id="returnurl" value="{{ returnurl }}" />
+                        <input type="hidden" name="modname" id="modname" value="{{ modname }}" />
+                        <input type="hidden" name="itemtype" id="itemtype" value="{{ itemtype }}" />
+                        <input type="hidden" name="itemid" id="itemid" value="{{ itemid }}" />
+                        <input type="hidden" name="authid" id="authid" value="{{ authid }}" />
+                    </div>
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
