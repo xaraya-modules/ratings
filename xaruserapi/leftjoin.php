@@ -30,7 +30,7 @@
  *               ...
  *               'rating'  => '[SitePrefix]_ratings.rating')
  */
-function ratings_userapi_leftjoin($args)
+function ratings_userapi_leftjoin(array $args = [], $context = null)
 {
     // Get arguments from argument array
     extract($args);
@@ -64,7 +64,7 @@ function ratings_userapi_leftjoin($args)
     }
 
     // Table definition
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     $userstable = $xartable['ratings'];
 
     $leftjoin = [];

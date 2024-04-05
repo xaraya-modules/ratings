@@ -20,7 +20,7 @@
  * @param $args['sort'] string sort by itemid (default), rating or numratings
  * @return array $array[$itemid] = array('numratings' => $numratings, 'rating' => $rating)
  */
-function ratings_userapi_getitems($args)
+function ratings_userapi_getitems(array $args = [], $context = null)
 {
     // Get arguments from argument array
     extract($args);
@@ -64,7 +64,7 @@ function ratings_userapi_getitems($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     // Get items
@@ -89,7 +89,7 @@ function ratings_userapi_getitems($args)
         $query .= " ORDER BY itemid ASC";
     }
 
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result = & $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;
     }

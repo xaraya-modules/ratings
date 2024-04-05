@@ -13,7 +13,7 @@
 /**
  * Delete ratings of module items
  */
-function ratings_admin_delete()
+function ratings_admin_delete(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('DeleteRatings')) {
@@ -47,14 +47,11 @@ function ratings_admin_delete()
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarMod::apiFunc(
-                    $modinfo['name'],
-                    'user',
-                    'getitemtypes',
-                    // don't throw an exception if this function doesn't exist
-                    [],
-                    0
-                );
+                try {
+                    $mytypes = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes');
+                } catch (Exception $e) {
+                    $mytypes = [];
+                }
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                     $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                 } else {
@@ -82,6 +79,6 @@ function ratings_admin_delete()
     )) {
         return;
     }
-    xarController::redirect(xarController::URL('ratings', 'admin', 'view'));
+    xarController::redirect(xarController::URL('ratings', 'admin', 'view'), null, $context);
     return true;
 }

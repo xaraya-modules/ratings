@@ -21,7 +21,7 @@ function ratings_init()
     # Set tables
     #
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     // Load Table Maintainance API
     sys::import('xaraya.tableddl');
     // Create table
@@ -195,7 +195,7 @@ function ratings_init()
             ],
         ];
     xarPrivileges::defineInstance('ratings', 'Item', $instances);
-    $ratingstable=$xartable['ratings'];
+    $ratingstable = $xartable['ratings'];
 
     $query1 = "SELECT DISTINCT $xartable[modules].name FROM $xartable[ratings] LEFT JOIN $xartable[modules] ON $xartable[ratings].module_id = $xartable[modules].regid";
     $query2 = "SELECT DISTINCT itemtype FROM $xartable[ratings]";
@@ -292,14 +292,11 @@ function ratings_upgrade($oldversion)
                     // we have hooks for individual item types here
                     if (!isset($value[0])) {
                         // Get the list of all item types for this module (if any)
-                        $mytypes = xarMod::apiFunc(
-                            $modname,
-                            'user',
-                            'getitemtypes',
-                            // don't throw an exception if this function doesn't exist
-                            [],
-                            0
-                        );
+                        try {
+                            $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes');
+                        } catch (Exception $e) {
+                            $mytypes = [];
+                        }
                         foreach ($value as $itemtype => $val) {
                             xarModVars::set('ratings', "shownum.$modname.$itemtype", 1);
                         }
@@ -312,10 +309,10 @@ function ratings_upgrade($oldversion)
             // modify field xar_ratings.rating
             // Get database information
             $dbconn = xarDB::getConn();
-            $xartable =& xarDB::getTables();
-            $query= "ALTER TABLE " . $xartable['ratings'] . "
+            $xartable = & xarDB::getTables();
+            $query = "ALTER TABLE " . $xartable['ratings'] . "
                            MODIFY COLUMN rating double(8,5) NOT NULL default '0.00000'";
-            $result =& $dbconn->Execute($query);
+            $result = & $dbconn->Execute($query);
             if (!$result) {
                 return;
             }

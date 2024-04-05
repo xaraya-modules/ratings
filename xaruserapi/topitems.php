@@ -19,7 +19,7 @@
  * @param $args['startnum'] start at this number (1-based)
  * @return array of array('itemid' => $itemid, 'hits' => $hits)
  */
-function ratings_userapi_topitems($args)
+function ratings_userapi_topitems(array $args = [], $context = null)
 {
     // Get arguments from argument array
     extract($args);
@@ -58,7 +58,7 @@ function ratings_userapi_topitems($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     // Get items

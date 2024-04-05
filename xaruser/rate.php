@@ -13,7 +13,7 @@
 /**
  * @return bool true
  */
-function ratings_user_rate($args)
+function ratings_user_rate(array $args = [], $context = null)
 {
     // Get parameters
     if (!xarVar::fetch('modname', 'isset', $modname, null, xarVar::DONT_SET)) {
@@ -56,7 +56,7 @@ function ratings_user_rate($args)
         ));
     }
 
-    xarController::redirect($returnurl);
+    xarController::redirect($returnurl, null, $context);
 
     return true;
 }

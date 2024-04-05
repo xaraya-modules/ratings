@@ -21,7 +21,7 @@
  * @param $args['itemid'] int item id
  * @return bool true on success, false on failure
  */
-function ratings_adminapi_delete($args)
+function ratings_adminapi_delete(array $args = [], $context = null)
 {
     // Get arguments from argument array
     extract($args);
@@ -35,11 +35,11 @@ function ratings_adminapi_delete($args)
         }
         return $extrainfo;
 
-    // if we're coming from the delete GUI (or elsewhere)
+        // if we're coming from the delete GUI (or elsewhere)
     } elseif (!empty($confirm)) {
         // Database information
         $dbconn = xarDB::getConn();
-        $xartable =& xarDB::getTables();
+        $xartable = & xarDB::getTables();
         $ratingstable = $xartable['ratings'];
 
         $query = "DELETE FROM $ratingstable ";
@@ -68,7 +68,7 @@ function ratings_adminapi_delete($args)
             }
         }
 
-        $result =& $dbconn->Execute($query, $bindvars);
+        $result = & $dbconn->Execute($query, $bindvars);
         if (!$result) {
             return;
         }

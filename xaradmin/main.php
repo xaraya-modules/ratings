@@ -10,7 +10,7 @@
  * @link http://xaraya.com/index.php/release/41.html
  * @author Jim McDonald
  */
-function ratings_admin_main()
+function ratings_admin_main(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('ManageRatings')) {
@@ -20,7 +20,7 @@ function ratings_admin_main()
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return [];
     } else {
-        xarController::redirect(xarController::URL('ratings', 'admin', 'view'));
+        xarController::redirect(xarController::URL('ratings', 'admin', 'view'), null, $context);
     }
     // success
     return true;

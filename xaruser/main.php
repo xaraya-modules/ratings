@@ -14,7 +14,7 @@
  * the main user function
  * @return string
  */
-function ratings_user_main()
+function ratings_user_main(array $args = [], $context = null)
 {
     // Return output
     return xarML('This module has no user interface *except* via display hooks');

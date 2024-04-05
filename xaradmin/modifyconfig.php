@@ -15,12 +15,9 @@
  *
  * @author Jim McDonald
  * @access public
- * @param no $ parameters
- * @return true on success or void on failure
- * @throws no exceptions
- * @todo nothing
+ * @return true|string|void on success or void on failure
  */
-function ratings_admin_modifyconfig()
+function ratings_admin_modifyconfig(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('AdminRatings')) {
@@ -66,14 +63,11 @@ function ratings_admin_modifyconfig()
                             // we have hooks for individual item types here
                             if (!isset($value[0])) {
                                 // Get the list of all item types for this module (if any)
-                                $mytypes = xarMod::apiFunc(
-                                    $modname,
-                                    'user',
-                                    'getitemtypes',
-                                    // don't throw an exception if this function doesn't exist
-                                    [],
-                                    0
-                                );
+                                try {
+                                    $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes');
+                                } catch (Exception $e) {
+                                    $mytypes = [];
+                                }
                                 foreach ($value as $itemtype => $val) {
                                     $ratingsstyle = xarModVars::get('ratings', "ratingsstyle.$modname.$itemtype");
                                     if (empty($ratingsstyle)) {
@@ -142,7 +136,7 @@ function ratings_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSec::confirmAuthKey()) {
-                return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
+                return xarController::badRequest('bad_author', $context);
             }
             switch ($data['tab']) {
                 case 'general':

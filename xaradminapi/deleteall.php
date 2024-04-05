@@ -15,10 +15,9 @@
  *
  * @param $args['itemid'] ID of the itemid (must be the module name here !!)
  * @param $args['extrainfo'] extra information
- * @return bool true on success, false on failure
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool|void true on success, false on failure
  */
-function ratings_adminapi_deleteall($args)
+function ratings_adminapi_deleteall(array $args = [], $context = null)
 {
     extract($args);
 
@@ -55,12 +54,12 @@ function ratings_adminapi_deleteall($args)
     }
 
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     $query = "DELETE FROM $ratingstable
             WHERE module_id = ?";
-    $result =& $dbconn->Execute($query, [$modid]);
+    $result = & $dbconn->Execute($query, [$modid]);
     if (!$result) {
         return;
     }

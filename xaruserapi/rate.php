@@ -19,7 +19,7 @@
  * @param $args['rating'] actual rating
  * @return int the new rating for this item
  */
-function ratings_userapi_rate($args)
+function ratings_userapi_rate(array $args = [], $context = null)
 {
     // Get arguments from argument array
     extract($args);
@@ -61,24 +61,24 @@ function ratings_userapi_rate($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     // Multipe rate check
     if (!empty($itemtype)) {
         $seclevel = xarModVars::get('ratings', "seclevel.$modname.$itemtype");
         if (!isset($seclevel)) {
-            $seclevel = xarModVars::get('ratings', 'seclevel.'.$modname);
+            $seclevel = xarModVars::get('ratings', 'seclevel.' . $modname);
         }
     } else {
-        $seclevel = xarModVars::get('ratings', 'seclevel.'.$modname);
+        $seclevel = xarModVars::get('ratings', 'seclevel.' . $modname);
     }
     if (!isset($seclevel)) {
         $seclevel = xarModVars::get('ratings', 'seclevel');
     }
     if ($seclevel == 'high') {
         if (xarUser::isLoggedIn()) {
-            $rated = xarModUserVars::get('ratings', $modname.':'.$itemtype.':'.$itemid);
+            $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);
             if (!empty($rated) && $rated > 1) {
                 return;
             }
@@ -88,13 +88,13 @@ function ratings_userapi_rate($args)
     } elseif ($seclevel == 'medium') {
         // Check to see if user has already voted
         if (xarUser::isLoggedIn()) {
-            $rated = xarModUserVars::get('ratings', $modname.':'.$itemtype.':'.$itemid);
-            if (!empty($rated) && $rated > time() - 24*60*60) {
+            $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);
+            if (!empty($rated) && $rated > time() - 24 * 60 * 60) {
                 return;
             }
         } else {
-            $rated = xarSession::getVar('ratings:'.$modname.':'.$itemtype.':'.$itemid);
-            if (!empty($rated) && $rated > time() - 24*60*60) {
+            $rated = xarSession::getVar('ratings:' . $modname . ':' . $itemtype . ':' . $itemid);
+            if (!empty($rated) && $rated > time() - 24 * 60 * 60) {
                 return;
             }
         }
@@ -109,7 +109,7 @@ function ratings_userapi_rate($args)
               AND itemid = ?
               AND itemtype = ?";
     $bindvars = [$modid, $itemid, $itemtype];
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result = & $dbconn->Execute($query, $bindvars);
     if (!$result) {
         return;
     }
@@ -121,7 +121,7 @@ function ratings_userapi_rate($args)
 
         // Calculate new rating
         $newnumratings = $numratings + 1;
-        $newrating = (($currating*$numratings) + $rating)/$newnumratings;
+        $newrating = (($currating * $numratings) + $rating) / $newnumratings;
 
         // Insert new rating
         $query = "UPDATE $ratingstable
@@ -129,7 +129,7 @@ function ratings_userapi_rate($args)
                     numratings = ?
                 WHERE id = ?";
         $bindvars = [$newrating, $newnumratings, $id];
-        $result =& $dbconn->Execute($query, $bindvars);
+        $result = & $dbconn->Execute($query, $bindvars);
         if (!$result) {
             return;
         }
@@ -152,7 +152,7 @@ function ratings_userapi_rate($args)
                         ?,
                         ?)";
         $bindvars = [$id, $modid, $itemid, $itemtype, $rating, 1];
-        $result =& $dbconn->Execute($query, $bindvars);
+        $result = & $dbconn->Execute($query, $bindvars);
         if (!$result) {
             return;
         }
@@ -163,15 +163,15 @@ function ratings_userapi_rate($args)
     // Set note that user has rated this item if required
     if ($seclevel == 'high') {
         if (xarUser::isLoggedIn()) {
-            xarModUserVars::set('ratings', $modname.':'.$itemtype.':'.$itemid, time());
+            xarModUserVars::set('ratings', $modname . ':' . $itemtype . ':' . $itemid, time());
         } else {
             // nope
         }
     } elseif ($seclevel == 'medium') {
         if (xarUser::isLoggedIn()) {
-            xarModUserVars::set('ratings', $modname.':'.$itemtype.':'.$itemid, time());
+            xarModUserVars::set('ratings', $modname . ':' . $itemtype . ':' . $itemid, time());
         } else {
-            xarSession::setVar('ratings:'.$modname.':'.$itemtype.':'.$itemid, time());
+            xarSession::setVar('ratings:' . $modname . ':' . $itemtype . ':' . $itemid, time());
         }
     }
     // CHECKME: find some cleaner way to update the page cache if necessary

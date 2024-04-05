@@ -15,7 +15,7 @@
  *
  * @return array $array[$modid][$itemtype] = array('items' => $numitems,'ratings' => $numratings);
  */
-function ratings_userapi_getmodules($args)
+function ratings_userapi_getmodules(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('OverviewRatings')) {
@@ -24,7 +24,7 @@ function ratings_userapi_getmodules($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     // Get items

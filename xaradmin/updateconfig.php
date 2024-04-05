@@ -13,7 +13,7 @@
 /**
  * Update configuration
  */
-function ratings_admin_updateconfig()
+function ratings_admin_updateconfig(array $args = [], $context = null)
 {
     // Get parameters
     if (!xarVar::fetch('ratingsstyle', 'array', $ratingsstyle, null, xarVar::NOT_REQUIRED)) {
@@ -49,14 +49,11 @@ function ratings_admin_updateconfig()
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarMod::apiFunc(
-                    $modname,
-                    'user',
-                    'getitemtypes',
-                    // don't throw an exception if this function doesn't exist
-                    [],
-                    0
-                );
+                try {
+                    $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes');
+                } catch (Exception $e) {
+                    $mytypes = [];
+                }
                 foreach ($value as $itemtype => $val) {
                     $settings[] = "$modname.$itemtype";
                 }
@@ -94,7 +91,7 @@ function ratings_admin_updateconfig()
         }
     }
 
-    xarController::redirect(xarController::URL('ratings', 'admin', 'modifyconfig'));
+    xarController::redirect(xarController::URL('ratings', 'admin', 'modifyconfig'), null, $context);
 
     return true;
 }

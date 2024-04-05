@@ -17,7 +17,7 @@
  * @param $args['itemid'] ID of the item this rating is for
  * @return int rating the corresponding rating, or void if no rating exists
  */
-function ratings_userapi_get($args)
+function ratings_userapi_get(array $args = [], $context = null)
 {
     // Get arguments from argument array
     extract($args);
@@ -57,7 +57,7 @@ function ratings_userapi_get($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = & xarDB::getTables();
     $ratingstable = $xartable['ratings'];
     // Get items
     $query = "SELECT rating
@@ -66,7 +66,7 @@ function ratings_userapi_get($args)
               AND itemid = ?
               AND itemtype = ?";
     $bindvars = [$modid, $itemid, $itemtype];
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result = & $dbconn->Execute($query, $bindvars);
     if (!$result || $result->EOF) {
         return;
     }

@@ -13,7 +13,7 @@
 /**
  * get the rating styles
  */
-function ratings_userapi_getstyles($args)
+function ratings_userapi_getstyles(array $args = [], $context = null)
 {
     $ratingstyles = [
         ['id' => 'percentage', 'name' => xarML('Percentage')],

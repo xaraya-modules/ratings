@@ -13,7 +13,7 @@
 /**
  * View statistics about ratings
  */
-function ratings_admin_view()
+function ratings_admin_view(array $args = [], $context = null)
 {
     // Security Check
     if (!xarSecurity::check('AdminRatings')) {
@@ -44,25 +44,22 @@ function ratings_admin_view()
         foreach ($modlist as $modid => $itemtypes) {
             $modinfo = xarMod::getInfo($modid);
             // Get the list of all item types for this module (if any)
-            $mytypes = xarMod::apiFunc(
-                $modinfo['name'],
-                'user',
-                'getitemtypes',
-                // don't throw an exception if this function doesn't exist
-                [],
-                0
-            );
+            try {
+                $mytypes = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes');
+            } catch (Exception $e) {
+                $mytypes = [];
+            }
             foreach ($itemtypes as $itemtype => $stats) {
                 $moditem = [];
                 $moditem['numitems'] = $stats['items'];
                 $moditem['numratings'] = $stats['ratings'];
                 if ($itemtype == 0) {
                     $moditem['name'] = ucwords($modinfo['displayname']);
-                //    $moditem['link'] = xarController::URL($modinfo['name'],'user','main');
+                    //    $moditem['link'] = xarController::URL($modinfo['name'],'user','main');
                 } else {
                     if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
-                    //    $moditem['link'] = $mytypes[$itemtype]['url'];
+                        //    $moditem['link'] = $mytypes[$itemtype]['url'];
                     } else {
                         $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
                         //    $moditem['link'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
@@ -95,17 +92,14 @@ function ratings_admin_view()
             $itemtype = null;
         } else {
             // Get the list of all item types for this module (if any)
-            $mytypes = xarMod::apiFunc(
-                $modinfo['name'],
-                'user',
-                'getitemtypes',
-                // don't throw an exception if this function doesn't exist
-                [],
-                0
-            );
+            try {
+                $mytypes = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes');
+            } catch (Exception $e) {
+                $mytypes = [];
+            }
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                 $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
-            //    $data['modlink'] = $mytypes[$itemtype]['url'];
+                //    $data['modlink'] = $mytypes[$itemtype]['url'];
             } else {
                 $data['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
                 //    $data['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
