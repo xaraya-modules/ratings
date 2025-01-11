@@ -20,7 +20,7 @@ use xarUser;
 use xarModUserVars;
 use xarSession;
 use sys;
-use BadParameterException;
+use Exception;
 
 sys::import('xaraya.modules.method');
 

@@ -19,7 +19,7 @@ use xarMod;
 use xarModVars;
 use xarController;
 use sys;
-use BadParameterException;
+use Exception;
 
 sys::import('xaraya.modules.method');
 
