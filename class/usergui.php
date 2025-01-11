@@ -19,6 +19,10 @@ sys::import('modules.ratings.class.userapi');
 
 /**
  * Handle the ratings user GUI
+ *
+ * @method mixed display(array $args)
+ * @method mixed main(array $args)
+ * @method mixed rate(array $args)
  * @extends UserGuiClass<Module>
  */
 class UserGui extends UserGuiClass

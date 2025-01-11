@@ -18,6 +18,9 @@ sys::import('xaraya.modules.adminapi');
 
 /**
  * Handle the ratings admin API
+ *
+ * @method mixed delete(array $args)
+ * @method mixed deleteall(array $args)
  * @extends AdminApiClass<Module>
  */
 class AdminApi extends AdminApiClass

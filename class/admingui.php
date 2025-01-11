@@ -19,6 +19,13 @@ sys::import('modules.ratings.class.adminapi');
 
 /**
  * Handle the ratings admin GUI
+ *
+ * @method mixed delete(array $args)
+ * @method mixed main(array $args)
+ * @method mixed modifyconfig(array $args)
+ * @method mixed overview(array $args)
+ * @method mixed updateconfig(array $args)
+ * @method mixed view(array $args)
  * @extends AdminGuiClass<Module>
  */
 class AdminGui extends AdminGuiClass

@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\UserApi;
 
+
+use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
 use sys;
 use BadParameterException;
@@ -19,6 +21,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * ratings userapi getstyles function
+ * @extends MethodClass<UserApi>
  */
 class GetstylesMethod extends MethodClass
 {

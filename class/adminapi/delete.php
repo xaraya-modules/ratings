@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\AdminApi;
 
+
+use Xaraya\Modules\Ratings\AdminApi;
 use Xaraya\Modules\MethodClass;
 use xarDB;
 use xarModVars;
@@ -21,6 +23,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * ratings adminapi delete function
+ * @extends MethodClass<AdminApi>
  */
 class DeleteMethod extends MethodClass
 {

@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\UserGui;
 
+
+use Xaraya\Modules\Ratings\UserGui;
 use Xaraya\Modules\MethodClass;
 use xarVar;
 use xarSec;
@@ -24,6 +26,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * ratings user rate function
+ * @extends MethodClass<UserGui>
  */
 class RateMethod extends MethodClass
 {

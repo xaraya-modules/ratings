@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\AdminApi;
 
+
+use Xaraya\Modules\Ratings\AdminApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use xarSecurity;
@@ -24,6 +26,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * ratings adminapi deleteall function
+ * @extends MethodClass<AdminApi>
  */
 class DeleteallMethod extends MethodClass
 {

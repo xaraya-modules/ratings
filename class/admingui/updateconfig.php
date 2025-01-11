@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\AdminGui;
 
+
+use Xaraya\Modules\Ratings\AdminGui;
 use Xaraya\Modules\MethodClass;
 use xarVar;
 use xarSec;
@@ -25,6 +27,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * ratings admin updateconfig function
+ * @extends MethodClass<AdminGui>
  */
 class UpdateconfigMethod extends MethodClass
 {

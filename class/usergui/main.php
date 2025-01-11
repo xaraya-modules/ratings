@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\UserGui;
 
+
+use Xaraya\Modules\Ratings\UserGui;
 use Xaraya\Modules\MethodClass;
 use sys;
 use BadParameterException;
@@ -19,6 +21,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * ratings user main function
+ * @extends MethodClass<UserGui>
  */
 class MainMethod extends MethodClass
 {

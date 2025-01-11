@@ -11,6 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\UserApi;
 
+
+use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use xarSecurity;
@@ -22,6 +24,7 @@ sys::import('xaraya.modules.method');
 
 /**
  * ratings userapi topitems function
+ * @extends MethodClass<UserApi>
  */
 class TopitemsMethod extends MethodClass
 {
