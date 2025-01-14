@@ -32,10 +32,11 @@ class GetMethod extends MethodClass
 
     /**
      * get a rating for a specific item
-     * @param mixed $args ['modname'] name of the module this rating is for
-     * @param mixed $args ['itemtype'] item type (optional)
-     * @param mixed $args ['itemid'] ID of the item this rating is for
-     * @return int rating the corresponding rating, or void if no rating exists
+     * @param array<mixed> $args
+     * @var mixed $modname name of the module this rating is for
+     * @var mixed $itemtype item type (optional)
+     * @var mixed $itemid ID of the item this rating is for
+     * @return int|void rating the corresponding rating, or void if no rating exists
      */
     public function __invoke(array $args = [])
     {
@@ -45,9 +46,9 @@ class GetMethod extends MethodClass
         // Argument check
         if ((!isset($modname)) ||
             (!isset($itemid))) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                xarML('module name or item id'),
+                $this->translate('module name or item id'),
                 'user',
                 'get',
                 'ratings'
@@ -56,9 +57,9 @@ class GetMethod extends MethodClass
         }
         $modid = xarMod::getRegID($modname);
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                xarML('module id'),
+                $this->translate('module id'),
                 'user',
                 'get',
                 'ratings'
@@ -71,7 +72,7 @@ class GetMethod extends MethodClass
         }
 
         // Security Check
-        if (!xarSecurity::check('ReadRatings')) {
+        if (!$this->checkAccess('ReadRatings')) {
             return;
         }
 

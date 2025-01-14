@@ -31,13 +31,14 @@ class DeleteMethod extends MethodClass
 
     /**
      * delete a ratings item - hook for ('item','delete','API')
-     * @param mixed $args ['itemid'] ID of the item
-     * @param mixed $args ['extrainfo'] extra information
-     * @param mixed $args ['confirm'] string coming from the delete GUI function
-     * @param mixed $args ['modid'] int module id
-     * @param mixed $args ['itemtype'] int itemtype
-     * @param mixed $args ['itemid'] int item id
-     * @return bool true on success, false on failure
+     * @param array<mixed> $args
+     * @var mixed $itemid ID of the item
+     * @var mixed $extrainfo extra information
+     * @var mixed $confirm string coming from the delete GUI function
+     * @var mixed $modid int module id
+     * @var mixed $itemtype int itemtype
+     * @var mixed $itemid int item id
+     * @return bool|void true on success, false on failure
      */
     public function __invoke(array $args = [])
     {
@@ -64,7 +65,7 @@ class DeleteMethod extends MethodClass
             $bindvars = [];
             if (!empty($modid)) {
                 if (!is_numeric($modid)) {
-                    $msg = xarML(
+                    $msg = $this->translate(
                         'Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'module id',
                         'admin',

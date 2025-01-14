@@ -37,14 +37,15 @@ class DisplayMethod extends MethodClass
 
     /**
      * display rating for a specific item, and request rating
-     * @param mixed $args ['itemid'] ID of the item this rating is for
-     * @param mixed $args ['extrainfo'] URL to return to if user chooses to rate
-     * @param mixed $args ['ratingsstyle'] ratings style to display this rating in (optional)
-     * @param mixed $args ['shownum'] bool to show number of ratings (optional)
-     * @param mixed $args ['showdisplay'] bool to show rating result (optional)
-     * @param mixed $args ['showinput'] bool to show rating form (optional)
-     * @param mixed $args ['itemtype'] item type
-     * @return array output with rating information $numratings, $rating, $rated, $authid
+     * @param array<mixed> $args
+     * @var mixed $itemid ID of the item this rating is for
+     * @var mixed $extrainfo URL to return to if user chooses to rate
+     * @var mixed $ratingsstyle ratings style to display this rating in (optional)
+     * @var mixed $shownum bool to show number of ratings (optional)
+     * @var mixed $showdisplay bool to show rating result (optional)
+     * @var mixed $showinput bool to show rating form (optional)
+     * @var mixed $itemtype item type
+     * @return array|void output with rating information $numratings, $rating, $rated, $authid
      */
     public function __invoke(array $args = [])
     {
@@ -96,24 +97,24 @@ class DisplayMethod extends MethodClass
 
         if (!isset($ratingsstyle)) {
             if (!empty($itemtype)) {
-                $ratingsstyle = xarModVars::get('ratings', "ratingsstyle.$modname.$itemtype");
+                $ratingsstyle = $this->getModVar("ratingsstyle.$modname.$itemtype");
             }
             if (!isset($ratingsstyle)) {
-                $ratingsstyle = xarModVars::get('ratings', 'ratingsstyle.' . $modname);
+                $ratingsstyle = $this->getModVar('ratingsstyle.' . $modname);
             }
             if (!isset($ratingsstyle)) {
-                $ratingsstyle = xarModVars::get('ratings', 'defaultratingsstyle');
+                $ratingsstyle = $this->getModVar('defaultratingsstyle');
             }
         }
         if (!isset($shownum)) {
             if (!empty($itemtype)) {
-                $shownum = xarModVars::get('ratings', "shownum.$modname.$itemtype");
+                $shownum = $this->getModVar("shownum.$modname.$itemtype");
             }
             if (!isset($shownum)) {
-                $shownum = xarModVars::get('ratings', 'shownum.' . $modname);
+                $shownum = $this->getModVar('shownum.' . $modname);
             }
             if (!isset($shownum)) {
-                $shownum = xarModVars::get('ratings', 'shownum');
+                $shownum = $this->getModVar('shownum');
             }
         }
 
@@ -209,20 +210,20 @@ class DisplayMethod extends MethodClass
 
         // Multiple rate check
         if (!empty($itemtype)) {
-            $seclevel = xarModVars::get('ratings', "seclevel.$modname.$itemtype");
+            $seclevel = $this->getModVar("seclevel.$modname.$itemtype");
             if (!isset($seclevel)) {
-                $seclevel = xarModVars::get('ratings', 'seclevel.' . $modname);
+                $seclevel = $this->getModVar('seclevel.' . $modname);
             }
         } else {
-            $seclevel = xarModVars::get('ratings', 'seclevel.' . $modname);
+            $seclevel = $this->getModVar('seclevel.' . $modname);
         }
         if (!isset($seclevel)) {
-            $seclevel = xarModVars::get('ratings', 'seclevel');
+            $seclevel = $this->getModVar('seclevel');
         }
         if ($seclevel == 'high') {
             // Check to see if user has already voted
             if (xarUser::isLoggedIn()) {
-                if (!xarModVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid)) {
+                if (!$this->getModVar($modname . ':' . $itemtype . ':' . $itemid)) {
                     xarModVars::set('ratings', $modname . ':' . $itemtype . ':' . $itemid, 1);
                 }
                 $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);
@@ -238,7 +239,7 @@ class DisplayMethod extends MethodClass
         } elseif ($seclevel == 'medium') {
             // Check to see if user has already voted
             if (xarUser::isLoggedIn()) {
-                if (!xarModVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid)) {
+                if (!$this->getModVar($modname . ':' . $itemtype . ':' . $itemid)) {
                     xarModVars::set('ratings', $modname . ':' . $itemtype . ':' . $itemid, 1);
                 }
                 $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);

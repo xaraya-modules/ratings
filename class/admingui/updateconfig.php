@@ -39,22 +39,22 @@ class UpdateconfigMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Get parameters
-        if (!xarVar::fetch('ratingsstyle', 'array', $ratingsstyle, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('ratingsstyle', 'array', $ratingsstyle, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('seclevel', 'array', $seclevel, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('seclevel', 'array', $seclevel, null, xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('shownum', 'array', $shownum, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('shownum', 'array', $shownum, null, xarVar::NOT_REQUIRED)) {
             return;
         }
 
         // Confirm authorisation code
-        if (!xarSec::confirmAuthKey()) {
+        if (!$this->confirmAuthKey()) {
             return;
         }
         // Security Check
-        if (!xarSecurity::check('AdminRatings')) {
+        if (!$this->checkAccess('AdminRatings')) {
             return;
         }
 
@@ -89,15 +89,15 @@ class UpdateconfigMethod extends MethodClass
         foreach ($settings as $modname) {
             if ($modname == 'default') {
                 if (isset($ratingsstyle['default'])) {
-                    xarModVars::set('ratings', 'defaultratingsstyle', $ratingsstyle['default']);
+                    $this->setModVar('defaultratingsstyle', $ratingsstyle['default']);
                 }
                 if (isset($seclevel['default'])) {
-                    xarModVars::set('ratings', 'seclevel', $seclevel['default']);
+                    $this->setModVar('seclevel', $seclevel['default']);
                 }
                 if (!isset($shownum['default']) || $shownum['default'] != 1) {
-                    xarModVars::set('ratings', 'shownum', 0);
+                    $this->setModVar('shownum', 0);
                 } else {
-                    xarModVars::set('ratings', 'shownum', 1);
+                    $this->setModVar('shownum', 1);
                 }
             } else {
                 if (isset($ratingsstyle[$modname])) {
@@ -114,7 +114,7 @@ class UpdateconfigMethod extends MethodClass
             }
         }
 
-        xarController::redirect(xarController::URL('ratings', 'admin', 'modifyconfig'), null, $this->getContext());
+        $this->redirect($this->getUrl('admin', 'modifyconfig'));
 
         return true;
     }

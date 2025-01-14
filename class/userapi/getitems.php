@@ -32,12 +32,13 @@ class GetitemsMethod extends MethodClass
 
     /**
      * get a rating for a list of items
-     * @param mixed $args ['modname'] name of the module you want items from, or
-     * @param mixed $args ['modid'] module id you want items from
-     * @param mixed $args ['itemtype'] item type (optional)
-     * @param mixed $args ['itemids'] array of item IDs
-     * @param mixed $args ['sort'] string sort by itemid (default), rating or numratings
-     * @return array $array[$itemid] = array('numratings' => $numratings, 'rating' => $rating)
+     * @param array<mixed> $args
+     * @var mixed $modname name of the module you want items from, or
+     * @var mixed $modid module id you want items from
+     * @var mixed $itemtype item type (optional)
+     * @var mixed $itemids array of item IDs
+     * @var mixed $sort string sort by itemid (default), rating or numratings
+     * @return array|void $array[$itemid] = array('numratings' => $numratings, 'rating' => $rating)
      */
     public function __invoke(array $args = [])
     {
@@ -46,9 +47,9 @@ class GetitemsMethod extends MethodClass
 
         // Argument check
         if (!isset($modname) && !isset($modid)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                xarML('module name'),
+                $this->translate('module name'),
                 'user',
                 'getitems',
                 'ratings'
@@ -59,9 +60,9 @@ class GetitemsMethod extends MethodClass
             $modid = xarMod::getRegID($modname);
         }
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                xarML('module id'),
+                $this->translate('module id'),
                 'user',
                 'getitems',
                 'ratings'
@@ -77,7 +78,7 @@ class GetitemsMethod extends MethodClass
         }
 
         // Security Check
-        if (!xarSecurity::check('ReadRatings')) {
+        if (!$this->checkAccess('ReadRatings')) {
             return;
         }
 

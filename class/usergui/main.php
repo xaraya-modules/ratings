@@ -34,6 +34,6 @@ class MainMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Return output
-        return xarML('This module has no user interface *except* via display hooks');
+        return $this->translate('This module has no user interface *except* via display hooks');
     }
 }

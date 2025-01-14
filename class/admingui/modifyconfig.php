@@ -43,14 +43,14 @@ class ModifyconfigMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!xarSecurity::check('AdminRatings')) {
+        if (!$this->checkAccess('AdminRatings')) {
             return;
         }
 
-        if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED)) {
             return;
         }
-        if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -64,12 +64,12 @@ class ModifyconfigMethod extends MethodClass
                 switch ($data['tab']) {
                     case 'general':
 
-                        $defaultratingsstyle = xarModVars::get('ratings', 'defaultratingsstyle');
-                        $defaultseclevel = xarModVars::get('ratings', 'seclevel');
-                        $defaultshownum = xarModVars::get('ratings', 'shownum');
+                        $defaultratingsstyle = $this->getModVar('defaultratingsstyle');
+                        $defaultseclevel = $this->getModVar('seclevel');
+                        $defaultshownum = $this->getModVar('shownum');
 
                         $data['settings'] = [];
-                        $data['settings']['default'] = ['label' => xarML('Default configuration'),
+                        $data['settings']['default'] = ['label' => $this->translate('Default configuration'),
                             'ratingsstyle' => $defaultratingsstyle,
                             'seclevel' => $defaultseclevel,
                             'shownum' => $defaultshownum, ];
@@ -92,15 +92,15 @@ class ModifyconfigMethod extends MethodClass
                                         $mytypes = [];
                                     }
                                     foreach ($value as $itemtype => $val) {
-                                        $ratingsstyle = xarModVars::get('ratings', "ratingsstyle.$modname.$itemtype");
+                                        $ratingsstyle = $this->getModVar("ratingsstyle.$modname.$itemtype");
                                         if (empty($ratingsstyle)) {
                                             $ratingsstyle = $defaultratingsstyle;
                                         }
-                                        $seclevel = xarModVars::get('ratings', "seclevel.$modname.$itemtype");
+                                        $seclevel = $this->getModVar("seclevel.$modname.$itemtype");
                                         if (empty($seclevel)) {
                                             $seclevel = $defaultseclevel;
                                         }
-                                        $shownum = xarModVars::get('ratings', "shownum.$modname.$itemtype");
+                                        $shownum = $this->getModVar("shownum.$modname.$itemtype");
                                         if (empty($shownum)) {
                                             $shownum = $defaultshownum;
                                             xarModVars::set('ratings', "shownum.$modname.$itemtype", $defaultshownum);
@@ -109,30 +109,30 @@ class ModifyconfigMethod extends MethodClass
                                             $type = $mytypes[$itemtype]['label'];
                                             $link = $mytypes[$itemtype]['url'];
                                         } else {
-                                            $type = xarML('type #(1)', $itemtype);
+                                            $type = $this->translate('type #(1)', $itemtype);
                                             $link = xarController::URL($modname, 'user', 'view', ['itemtype' => $itemtype]);
                                         }
-                                        $data['settings']["$modname.$itemtype"] = ['label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
+                                        $data['settings']["$modname.$itemtype"] = ['label' => $this->translate('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                             'ratingsstyle' => $ratingsstyle,
                                             'seclevel' => $seclevel,
                                             'shownum' => $shownum, ];
                                     }
                                 } else {
-                                    $ratingsstyle = xarModVars::get('ratings', 'ratingsstyle.' . $modname);
+                                    $ratingsstyle = $this->getModVar('ratingsstyle.' . $modname);
                                     if (empty($ratingsstyle)) {
                                         $ratingsstyle = $defaultratingsstyle;
                                     }
-                                    $seclevel = xarModVars::get('ratings', 'seclevel.' . $modname);
+                                    $seclevel = $this->getModVar('seclevel.' . $modname);
                                     if (empty($seclevel)) {
                                         $seclevel = $defaultseclevel;
                                     }
-                                    $shownum = xarModVars::get('ratings', 'shownum.' . $modname);
+                                    $shownum = $this->getModVar('shownum.' . $modname);
                                     if (empty($shownum)) {
                                         $shownum = $defaultshownum;
                                         xarModVars::set('ratings', "shownum.$modname", $defaultshownum);
                                     }
                                     $link = xarController::URL($modname, 'user', 'main');
-                                    $data['settings'][$modname] = ['label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
+                                    $data['settings'][$modname] = ['label' => $this->translate('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                         'ratingsstyle' => $ratingsstyle,
                                         'seclevel' => $seclevel,
                                         'shownum' => $shownum, ];
@@ -141,12 +141,12 @@ class ModifyconfigMethod extends MethodClass
                         }
 
                         $data['secleveloptions'] = [
-                            ['id' => 'low', 'name' => xarML('Low : users can vote multiple times')],
-                            ['id' => 'medium', 'name' => xarML('Medium : users can vote once per day')],
-                            ['id' => 'high', 'name' => xarML('High : users must be logged in and can only vote once')],
+                            ['id' => 'low', 'name' => $this->translate('Low : users can vote multiple times')],
+                            ['id' => 'medium', 'name' => $this->translate('Medium : users can vote once per day')],
+                            ['id' => 'high', 'name' => $this->translate('High : users must be logged in and can only vote once')],
                         ];
 
-                        $data['authid'] = xarSec::genAuthKey();
+                        $data['authid'] = $this->genAuthKey();
                         break;
                     case 'tab2':
                         break;
@@ -158,7 +158,7 @@ class ModifyconfigMethod extends MethodClass
                 break;
             case 'update':
                 // Confirm authorisation code
-                if (!xarSec::confirmAuthKey()) {
+                if (!$this->confirmAuthKey()) {
                     return xarController::badRequest('bad_author', $this->getContext());
                 }
                 switch ($data['tab']) {

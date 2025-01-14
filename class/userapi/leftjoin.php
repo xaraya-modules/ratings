@@ -39,9 +39,10 @@ class LeftjoinMethod extends MethodClass
      *           WHERE ...
      *               AND $rating > 1000
      *               AND $where
-     * @param mixed $args ['modname'] name of the module you want items from, or
-     * @param mixed $args ['itemtype'] item type (optional) or array of itemtypes
-     * @param mixed $args ['itemids'] optional array of itemids that we are selecting on
+     * @param array<mixed> $args
+     * @var mixed $modname name of the module you want items from, or
+     * @var mixed $itemtype item type (optional) or array of itemtypes
+     * @var mixed $itemids optional array of itemids that we are selecting on
      * @return array array('table' => '[SitePrefix]_ratings',
      * 'field' => '[SitePrefix]_ratings.itemid',
      * 'where' => "[SitePrefix]_ratings.itemid IN (...)
@@ -49,6 +50,7 @@ class LeftjoinMethod extends MethodClass
      * 'module_id'  => '[SitePrefix]_ratings.module_id',
      * // ...
      * 'rating'  => '[SitePrefix]_ratings.rating')
+     * @return array|void
      */
     public function __invoke(array $args = [])
     {
@@ -73,12 +75,12 @@ class LeftjoinMethod extends MethodClass
             foreach ($itemids as $itemid) {
                 // Security Check
                 // FIXME: add some instances here
-                if (!xarSecurity::check('OverviewRatings')) {
+                if (!$this->checkAccess('OverviewRatings')) {
                     return;
                 }
             }
         } else {
-            if (!xarSecurity::check('OverviewRatings')) {
+            if (!$this->checkAccess('OverviewRatings')) {
                 return;
             }
         }

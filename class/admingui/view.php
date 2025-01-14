@@ -37,20 +37,20 @@ class ViewMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!xarSecurity::check('AdminRatings')) {
+        if (!$this->checkAccess('AdminRatings')) {
             return;
         }
 
-        if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('sort', 'isset', $sort, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('sort', 'isset', $sort, null, xarVar::DONT_SET)) {
             return;
         }
 
@@ -86,15 +86,13 @@ class ViewMethod extends MethodClass
                             //    $moditem['link'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                         }
                     }
-                    $moditem['link'] = xarController::URL(
-                        'ratings',
+                    $moditem['link'] = $this->getUrl(
                         'admin',
                         'view',
                         ['modid' => $modid,
                             'itemtype' => empty($itemtype) ? null : $itemtype, ]
                     );
-                    $moditem['delete'] = xarController::URL(
-                        'ratings',
+                    $moditem['delete'] = $this->getUrl(
                         'admin',
                         'delete',
                         ['modid' => $modid,
@@ -105,7 +103,7 @@ class ViewMethod extends MethodClass
                     $data['numratings'] += $moditem['numratings'];
                 }
             }
-            $data['delete'] = xarController::URL('ratings', 'admin', 'delete');
+            $data['delete'] = $this->getUrl('admin', 'delete');
         } else {
             $modinfo = xarMod::getInfo($modid);
             if (empty($itemtype)) {
@@ -139,8 +137,7 @@ class ViewMethod extends MethodClass
             $data['numratings'] = 0;
             foreach ($data['moditems'] as $itemid => $moditem) {
                 $data['numratings'] += $moditem['numratings'];
-                $data['moditems'][$itemid]['delete'] = xarController::URL(
-                    'ratings',
+                $data['moditems'][$itemid]['delete'] = $this->getUrl(
                     'admin',
                     'delete',
                     ['modid' => $modid,
@@ -148,8 +145,7 @@ class ViewMethod extends MethodClass
                         'itemid' => $itemid, ]
                 );
             }
-            $data['delete'] = xarController::URL(
-                'ratings',
+            $data['delete'] = $this->getUrl(
                 'admin',
                 'delete',
                 ['modid' => $modid,
@@ -159,8 +155,7 @@ class ViewMethod extends MethodClass
             if (empty($sort) || $sort == 'itemid') {
                 $data['sortlink']['itemid'] = '';
             } else {
-                $data['sortlink']['itemid'] = xarController::URL(
-                    'ratings',
+                $data['sortlink']['itemid'] = $this->getUrl(
                     'admin',
                     'view',
                     ['modid' => $modid,
@@ -170,8 +165,7 @@ class ViewMethod extends MethodClass
             if (!empty($sort) && $sort == 'numratings') {
                 $data['sortlink']['numratings'] = '';
             } else {
-                $data['sortlink']['numratings'] = xarController::URL(
-                    'ratings',
+                $data['sortlink']['numratings'] = $this->getUrl(
                     'admin',
                     'view',
                     ['modid' => $modid,
@@ -182,8 +176,7 @@ class ViewMethod extends MethodClass
             if (!empty($sort) && $sort == 'rating') {
                 $data['sortlink']['rating'] = '';
             } else {
-                $data['sortlink']['rating'] = xarController::URL(
-                    'ratings',
+                $data['sortlink']['rating'] = $this->getUrl(
                     'admin',
                     'view',
                     ['modid' => $modid,

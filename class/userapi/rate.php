@@ -36,11 +36,12 @@ class RateMethod extends MethodClass
 
     /**
      * rate an item
-     * @param mixed $args ['modname'] module name of the item to rate
-     * @param mixed $args ['itemtype'] item type (optional)
-     * @param mixed $args ['itemid'] ID of the item to rate
-     * @param mixed $args ['rating'] actual rating
-     * @return int the new rating for this item
+     * @param array<mixed> $args
+     * @var mixed $modname module name of the item to rate
+     * @var mixed $itemtype item type (optional)
+     * @var mixed $itemid ID of the item to rate
+     * @var mixed $rating actual rating
+     * @return int|void the new rating for this item
      */
     public function __invoke(array $args = [])
     {
@@ -51,9 +52,9 @@ class RateMethod extends MethodClass
         if ((!isset($modname)) ||
             (!isset($itemid)) ||
             (!isset($rating) || !is_numeric($rating) || $rating < 0 || $rating > 100)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                xarML('value'),
+                $this->translate('value'),
                 'user',
                 'rate',
                 'ratings'
@@ -62,9 +63,9 @@ class RateMethod extends MethodClass
         }
         $modid = xarMod::getRegID($modname);
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                xarML('module id'),
+                $this->translate('module id'),
                 'user',
                 'rate',
                 'ratings'
@@ -89,15 +90,15 @@ class RateMethod extends MethodClass
 
         // Multipe rate check
         if (!empty($itemtype)) {
-            $seclevel = xarModVars::get('ratings', "seclevel.$modname.$itemtype");
+            $seclevel = $this->getModVar("seclevel.$modname.$itemtype");
             if (!isset($seclevel)) {
-                $seclevel = xarModVars::get('ratings', 'seclevel.' . $modname);
+                $seclevel = $this->getModVar('seclevel.' . $modname);
             }
         } else {
-            $seclevel = xarModVars::get('ratings', 'seclevel.' . $modname);
+            $seclevel = $this->getModVar('seclevel.' . $modname);
         }
         if (!isset($seclevel)) {
-            $seclevel = xarModVars::get('ratings', 'seclevel');
+            $seclevel = $this->getModVar('seclevel');
         }
         if ($seclevel == 'high') {
             if (xarUser::isLoggedIn()) {
@@ -199,7 +200,7 @@ class RateMethod extends MethodClass
         }
         // CHECKME: find some cleaner way to update the page cache if necessary
         if (function_exists('xarOutputFlushCached') &&
-            xarModVars::get('xarcachemanager', 'FlushOnNewRating')) {
+            xarModVars::get('cachemanager', 'FlushOnNewRating')) {
             $modinfo = xarMod::getInfo($modid);
             // this may not be agressive enough flushing for all sites
             // we could flush "$modinfo[name]-" to remove all output cache associated with a module

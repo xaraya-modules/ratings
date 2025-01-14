@@ -35,7 +35,7 @@ class OverviewMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         /* Security Check */
-        if (!xarSecurity::check('AdminRatings', 0)) {
+        if (!$this->checkAccess('AdminRatings', 0)) {
             return;
         }
 

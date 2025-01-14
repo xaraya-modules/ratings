@@ -33,12 +33,12 @@ class GetstylesMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         $ratingstyles = [
-            ['id' => 'percentage', 'name' => xarML('Percentage')],
-            ['id' => 'outoffive', 'name' => xarML('Number out of five')],
-            ['id' => 'outoffivestars', 'name' => xarML('Stars out of five')],
-            ['id' => 'outoften', 'name' => xarML('Number out of ten')],
-            ['id' => 'outoftenstars', 'name' => xarML('Stars out of ten')],
-            ['id' => 'customised', 'name' => xarML('Customized: see the user-display template')],
+            ['id' => 'percentage', 'name' => $this->translate('Percentage')],
+            ['id' => 'outoffive', 'name' => $this->translate('Number out of five')],
+            ['id' => 'outoffivestars', 'name' => $this->translate('Stars out of five')],
+            ['id' => 'outoften', 'name' => $this->translate('Number out of ten')],
+            ['id' => 'outoftenstars', 'name' => $this->translate('Stars out of ten')],
+            ['id' => 'customised', 'name' => $this->translate('Customized: see the user-display template')],
         ];
         return $ratingstyles;
     }

@@ -34,8 +34,9 @@ class DeleteallMethod extends MethodClass
 
     /**
      * delete all ratings items for a module - hook for ('module','remove','API')
-     * @param mixed $args ['itemid'] ID of the itemid (must be the module name here !!)
-     * @param mixed $args ['extrainfo'] extra information
+     * @param array<mixed> $args
+     * @var mixed $itemid ID of the itemid (must be the module name here !!)
+     * @var mixed $extrainfo extra information
      * @return bool|void true on success, false on failure
      */
     public function __invoke(array $args = [])
@@ -45,7 +46,7 @@ class DeleteallMethod extends MethodClass
         // When called via hooks, we should get the real module name from itemid
         // here, because the current module is probably going to be 'modules' !!!
         if (!isset($itemid) || !is_string($itemid)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'itemid (= module name)',
                 'admin',
@@ -57,7 +58,7 @@ class DeleteallMethod extends MethodClass
 
         $modid = xarMod::getRegID($objectid);
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'module ID',
                 'admin',
@@ -70,7 +71,7 @@ class DeleteallMethod extends MethodClass
         // TODO: re-evaluate this for hook calls !!
         // Security check - important to do this as early on as possible to
         // avoid potential security holes or just too much wasted processing
-        if (!xarSecurity::check('DeleteRatings')) {
+        if (!$this->checkAccess('DeleteRatings')) {
             return;
         }
 

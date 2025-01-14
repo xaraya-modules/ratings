@@ -39,24 +39,24 @@ class RateMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Get parameters
-        if (!xarVar::fetch('modname', 'isset', $modname, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('modname', 'isset', $modname, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('returnurl', 'isset', $returnurl, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('returnurl', 'isset', $returnurl, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('rating', 'isset', $rating, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('rating', 'isset', $rating, null, xarVar::DONT_SET)) {
             return;
         }
 
         // Confirm authorisation code
-        if (!xarSec::confirmAuthKey()) {
+        if (!$this->confirmAuthKey()) {
             return;
         }
 
@@ -73,13 +73,13 @@ class RateMethod extends MethodClass
 
         if (isset($newrating)) {
             // Success
-            xarSession::setVar('ratings_statusmsg', xarML(
+            xarSession::setVar('ratings_statusmsg', $this->translate(
                 'Thank you for rating this item.',
                 'ratings'
             ));
         }
 
-        xarController::redirect($returnurl, null, $this->getContext());
+        $this->redirect($returnurl);
 
         return true;
     }

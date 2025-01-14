@@ -38,20 +38,20 @@ class DeleteMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!xarSecurity::check('DeleteRatings')) {
+        if (!$this->checkAccess('DeleteRatings')) {
             return;
         }
 
-        if (!xarVar::fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
+        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
+        if (!$this->fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) {
             return;
         }
 
@@ -82,12 +82,12 @@ class DeleteMethod extends MethodClass
                 }
             }
             // Generate a one-time authorisation code for this operation
-            $data['authid'] = xarSec::genAuthKey();
+            $data['authid'] = $this->genAuthKey();
             // Return the template variables defined in this function
             return $data;
         }
 
-        if (!xarSec::confirmAuthKey()) {
+        if (!$this->confirmAuthKey()) {
             return;
         }
         if (!xarMod::apiFunc(
@@ -101,7 +101,7 @@ class DeleteMethod extends MethodClass
         )) {
             return;
         }
-        xarController::redirect(xarController::URL('ratings', 'admin', 'view'), null, $this->getContext());
+        $this->redirect($this->getUrl('admin', 'view'));
         return true;
     }
 }

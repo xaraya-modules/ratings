@@ -32,11 +32,12 @@ class TopitemsMethod extends MethodClass
 
     /**
      * get the list of items with top N ratings for a module
-     * @param mixed $args ['modname'] name of the module you want items from
-     * @param mixed $args ['itemtype'] item type (optional)
-     * @param mixed $args ['numitems'] number of items to return
-     * @param mixed $args ['startnum'] start at this number (1-based)
-     * @return array of array('itemid' => $itemid, 'hits' => $hits)
+     * @param array<mixed> $args
+     * @var mixed $modname name of the module you want items from
+     * @var mixed $itemtype item type (optional)
+     * @var mixed $numitems number of items to return
+     * @var mixed $startnum start at this number (1-based)
+     * @return array|void of array('itemid' => $itemid, 'hits' => $hits)
      */
     public function __invoke(array $args = [])
     {
@@ -45,9 +46,9 @@ class TopitemsMethod extends MethodClass
 
         // Argument check
         if (!isset($modname)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                xarML('module name'),
+                $this->translate('module name'),
                 'user',
                 'topitems',
                 'ratings'
@@ -56,9 +57,9 @@ class TopitemsMethod extends MethodClass
         }
         $modid = xarMod::getRegID($modname);
         if (empty($modid)) {
-            $msg = xarML(
+            $msg = $this->translate(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                xarML('module id'),
+                $this->translate('module id'),
                 'user',
                 'topitems',
                 'ratings'
@@ -71,7 +72,7 @@ class TopitemsMethod extends MethodClass
         }
 
         // Security Check
-        if (!xarSecurity::check('ReadRatings')) {
+        if (!$this->checkAccess('ReadRatings')) {
             return;
         }
 
