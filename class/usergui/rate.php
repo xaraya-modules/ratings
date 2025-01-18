@@ -39,24 +39,24 @@ class RateMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Get parameters
-        if (!$this->fetch('modname', 'isset', $modname, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('modname', $modname)) {
             return;
         }
-        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('itemtype', $itemtype)) {
             return;
         }
-        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('itemid', $itemid)) {
             return;
         }
-        if (!$this->fetch('returnurl', 'isset', $returnurl, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('returnurl', $returnurl)) {
             return;
         }
-        if (!$this->fetch('rating', 'isset', $rating, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('rating', $rating)) {
             return;
         }
 
         // Confirm authorisation code
-        if (!$this->confirmAuthKey()) {
+        if (!$this->sec()->confirmAuthKey()) {
             return;
         }
 
@@ -73,13 +73,13 @@ class RateMethod extends MethodClass
 
         if (isset($newrating)) {
             // Success
-            xarSession::setVar('ratings_statusmsg', $this->translate(
+            xarSession::setVar('ratings_statusmsg', $this->ml(
                 'Thank you for rating this item.',
                 'ratings'
             ));
         }
 
-        $this->redirect($returnurl);
+        $this->ctl()->redirect($returnurl);
 
         return true;
     }

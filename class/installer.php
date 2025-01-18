@@ -185,9 +185,9 @@ class Installer extends InstallerClass
         #
         # Set up modvars
         #
-        $this->setModVar('defaultratingsstyle', 'outoffivestars');
-        $this->setModVar('seclevel', 'medium');
-        $this->setModVar('shownum', 1);
+        $this->mod()->setVar('defaultratingsstyle', 'outoffivestars');
+        $this->mod()->setVar('seclevel', 'medium');
+        $this->mod()->setVar('shownum', 1);
 
         # --------------------------------------------------------
         #
@@ -326,7 +326,7 @@ class Installer extends InstallerClass
                 // no break
             case '1.2.1':
                 // Set up shownum modvar, including for existing hooked modules
-                $this->setModVar('shownum', 1);
+                $this->mod()->setVar('shownum', 1);
                 $hookedmodules = xarMod::apiFunc(
                     'modules',
                     'admin',
@@ -344,10 +344,10 @@ class Installer extends InstallerClass
                                 $mytypes = [];
                             }
                             foreach ($value as $itemtype => $val) {
-                                xarModVars::set('ratings', "shownum.$modname.$itemtype", 1);
+                                $this->mod()->setVar("shownum.$modname.$itemtype", 1);
                             }
                         } else {
-                            $this->setModVar('shownum.' . $modname, 1);
+                            $this->mod()->setVar('shownum.' . $modname, 1);
                         }
                     }
                 }

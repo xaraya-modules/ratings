@@ -52,9 +52,9 @@ class RateMethod extends MethodClass
         if ((!isset($modname)) ||
             (!isset($itemid)) ||
             (!isset($rating) || !is_numeric($rating) || $rating < 0 || $rating > 100)) {
-            $msg = $this->translate(
+            $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                $this->translate('value'),
+                $this->ml('value'),
                 'user',
                 'rate',
                 'ratings'
@@ -63,9 +63,9 @@ class RateMethod extends MethodClass
         }
         $modid = xarMod::getRegID($modname);
         if (empty($modid)) {
-            $msg = $this->translate(
+            $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                $this->translate('module id'),
+                $this->ml('module id'),
                 'user',
                 'rate',
                 'ratings'
@@ -90,15 +90,15 @@ class RateMethod extends MethodClass
 
         // Multipe rate check
         if (!empty($itemtype)) {
-            $seclevel = $this->getModVar("seclevel.$modname.$itemtype");
+            $seclevel = $this->mod()->getVar("seclevel.$modname.$itemtype");
             if (!isset($seclevel)) {
-                $seclevel = $this->getModVar('seclevel.' . $modname);
+                $seclevel = $this->mod()->getVar('seclevel.' . $modname);
             }
         } else {
-            $seclevel = $this->getModVar('seclevel.' . $modname);
+            $seclevel = $this->mod()->getVar('seclevel.' . $modname);
         }
         if (!isset($seclevel)) {
-            $seclevel = $this->getModVar('seclevel');
+            $seclevel = $this->mod()->getVar('seclevel');
         }
         if ($seclevel == 'high') {
             if (xarUser::isLoggedIn()) {

@@ -46,7 +46,7 @@ class DeleteallMethod extends MethodClass
         // When called via hooks, we should get the real module name from itemid
         // here, because the current module is probably going to be 'modules' !!!
         if (!isset($itemid) || !is_string($itemid)) {
-            $msg = $this->translate(
+            $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'itemid (= module name)',
                 'admin',
@@ -58,7 +58,7 @@ class DeleteallMethod extends MethodClass
 
         $modid = xarMod::getRegID($objectid);
         if (empty($modid)) {
-            $msg = $this->translate(
+            $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 'module ID',
                 'admin',
@@ -71,7 +71,7 @@ class DeleteallMethod extends MethodClass
         // TODO: re-evaluate this for hook calls !!
         // Security check - important to do this as early on as possible to
         // avoid potential security holes or just too much wasted processing
-        if (!$this->checkAccess('DeleteRatings')) {
+        if (!$this->sec()->checkAccess('DeleteRatings')) {
             return;
         }
 

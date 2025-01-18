@@ -33,12 +33,12 @@ class GetstylesMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         $ratingstyles = [
-            ['id' => 'percentage', 'name' => $this->translate('Percentage')],
-            ['id' => 'outoffive', 'name' => $this->translate('Number out of five')],
-            ['id' => 'outoffivestars', 'name' => $this->translate('Stars out of five')],
-            ['id' => 'outoften', 'name' => $this->translate('Number out of ten')],
-            ['id' => 'outoftenstars', 'name' => $this->translate('Stars out of ten')],
-            ['id' => 'customised', 'name' => $this->translate('Customized: see the user-display template')],
+            ['id' => 'percentage', 'name' => $this->ml('Percentage')],
+            ['id' => 'outoffive', 'name' => $this->ml('Number out of five')],
+            ['id' => 'outoffivestars', 'name' => $this->ml('Stars out of five')],
+            ['id' => 'outoften', 'name' => $this->ml('Number out of ten')],
+            ['id' => 'outoftenstars', 'name' => $this->ml('Stars out of ten')],
+            ['id' => 'customised', 'name' => $this->ml('Customized: see the user-display template')],
         ];
         return $ratingstyles;
     }

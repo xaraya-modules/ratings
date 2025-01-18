@@ -35,7 +35,7 @@ class OverviewMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         /* Security Check */
-        if (!$this->checkAccess('AdminRatings', 0)) {
+        if (!$this->sec()->checkAccess('AdminRatings', 0)) {
             return;
         }
 
@@ -46,6 +46,6 @@ class OverviewMethod extends MethodClass
          */
 
         $data['context'] = $this->getContext();
-        return xarTpl::module('ratings', 'admin', 'main', $data, 'main');
+        return $this->mod()->template('main', $data, 'main');
     }
 }

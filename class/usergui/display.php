@@ -97,24 +97,24 @@ class DisplayMethod extends MethodClass
 
         if (!isset($ratingsstyle)) {
             if (!empty($itemtype)) {
-                $ratingsstyle = $this->getModVar("ratingsstyle.$modname.$itemtype");
+                $ratingsstyle = $this->mod()->getVar("ratingsstyle.$modname.$itemtype");
             }
             if (!isset($ratingsstyle)) {
-                $ratingsstyle = $this->getModVar('ratingsstyle.' . $modname);
+                $ratingsstyle = $this->mod()->getVar('ratingsstyle.' . $modname);
             }
             if (!isset($ratingsstyle)) {
-                $ratingsstyle = $this->getModVar('defaultratingsstyle');
+                $ratingsstyle = $this->mod()->getVar('defaultratingsstyle');
             }
         }
         if (!isset($shownum)) {
             if (!empty($itemtype)) {
-                $shownum = $this->getModVar("shownum.$modname.$itemtype");
+                $shownum = $this->mod()->getVar("shownum.$modname.$itemtype");
             }
             if (!isset($shownum)) {
-                $shownum = $this->getModVar('shownum.' . $modname);
+                $shownum = $this->mod()->getVar('shownum.' . $modname);
             }
             if (!isset($shownum)) {
-                $shownum = $this->getModVar('shownum');
+                $shownum = $this->mod()->getVar('shownum');
             }
         }
 
@@ -171,9 +171,9 @@ class DisplayMethod extends MethodClass
         }
         if (isset($data['rawrating'])) {
             // Set the cached variable if requested
-            if (xarVar::isCached('Hooks.ratings', 'save') &&
-                xarVar::getCached('Hooks.ratings', 'save') == true) {
-                xarVar::setCached('Hooks.ratings', 'value', $data['rawrating']);
+            if ($this->var()->isCached('Hooks.ratings', 'save') &&
+                $this->var()->getCached('Hooks.ratings', 'save') == true) {
+                $this->var()->setCached('Hooks.ratings', 'value', $data['rawrating']);
             }
 
             // Display current rating
@@ -210,21 +210,21 @@ class DisplayMethod extends MethodClass
 
         // Multiple rate check
         if (!empty($itemtype)) {
-            $seclevel = $this->getModVar("seclevel.$modname.$itemtype");
+            $seclevel = $this->mod()->getVar("seclevel.$modname.$itemtype");
             if (!isset($seclevel)) {
-                $seclevel = $this->getModVar('seclevel.' . $modname);
+                $seclevel = $this->mod()->getVar('seclevel.' . $modname);
             }
         } else {
-            $seclevel = $this->getModVar('seclevel.' . $modname);
+            $seclevel = $this->mod()->getVar('seclevel.' . $modname);
         }
         if (!isset($seclevel)) {
-            $seclevel = $this->getModVar('seclevel');
+            $seclevel = $this->mod()->getVar('seclevel');
         }
         if ($seclevel == 'high') {
             // Check to see if user has already voted
             if (xarUser::isLoggedIn()) {
-                if (!$this->getModVar($modname . ':' . $itemtype . ':' . $itemid)) {
-                    xarModVars::set('ratings', $modname . ':' . $itemtype . ':' . $itemid, 1);
+                if (!$this->mod()->getVar($modname . ':' . $itemtype . ':' . $itemid)) {
+                    $this->mod()->setVar($modname . ':' . $itemtype . ':' . $itemid, 1);
                 }
                 $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);
                 if (!empty($rated) && $rated > 1) {
@@ -239,8 +239,8 @@ class DisplayMethod extends MethodClass
         } elseif ($seclevel == 'medium') {
             // Check to see if user has already voted
             if (xarUser::isLoggedIn()) {
-                if (!$this->getModVar($modname . ':' . $itemtype . ':' . $itemid)) {
-                    xarModVars::set('ratings', $modname . ':' . $itemtype . ':' . $itemid, 1);
+                if (!$this->mod()->getVar($modname . ':' . $itemtype . ':' . $itemid)) {
+                    $this->mod()->setVar($modname . ':' . $itemtype . ':' . $itemid, 1);
                 }
                 $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);
                 if (!empty($rated) && $rated > time() - 24 * 60 * 60) {
@@ -257,7 +257,7 @@ class DisplayMethod extends MethodClass
         // module name is mandatory here, because this is displayed via hooks (= from within another module)
         // set an authid, but only if the current user can rate the item
         if (xarSecurity::check('CommentRatings', 0, 'Item', "$modname:$itemtype:$itemid")) {
-            $data['authid'] = xarSec::genAuthKey('ratings');
+            $data['authid'] = $this->sec()->genAuthKey();
         }
         return $data;
     }

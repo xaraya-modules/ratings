@@ -36,7 +36,7 @@ class GetmodulesMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!$this->checkAccess('OverviewRatings')) {
+        if (!$this->sec()->checkAccess('OverviewRatings')) {
             return;
         }
 

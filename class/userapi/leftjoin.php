@@ -75,12 +75,12 @@ class LeftjoinMethod extends MethodClass
             foreach ($itemids as $itemid) {
                 // Security Check
                 // FIXME: add some instances here
-                if (!$this->checkAccess('OverviewRatings')) {
+                if (!$this->sec()->checkAccess('OverviewRatings')) {
                     return;
                 }
             }
         } else {
-            if (!$this->checkAccess('OverviewRatings')) {
+            if (!$this->sec()->checkAccess('OverviewRatings')) {
                 return;
             }
         }

@@ -37,20 +37,20 @@ class ViewMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!$this->checkAccess('AdminRatings')) {
+        if (!$this->sec()->checkAccess('AdminRatings')) {
             return;
         }
 
-        if (!$this->fetch('modid', 'isset', $modid, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('modid', $modid)) {
             return;
         }
-        if (!$this->fetch('itemtype', 'isset', $itemtype, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('itemtype', $itemtype)) {
             return;
         }
-        if (!$this->fetch('itemid', 'isset', $itemid, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('itemid', $itemid)) {
             return;
         }
-        if (!$this->fetch('sort', 'isset', $sort, null, xarVar::DONT_SET)) {
+        if (!$this->var()->check('sort', $sort)) {
             return;
         }
 
@@ -86,13 +86,13 @@ class ViewMethod extends MethodClass
                             //    $moditem['link'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                         }
                     }
-                    $moditem['link'] = $this->getUrl(
+                    $moditem['link'] = $this->mod()->getURL(
                         'admin',
                         'view',
                         ['modid' => $modid,
                             'itemtype' => empty($itemtype) ? null : $itemtype, ]
                     );
-                    $moditem['delete'] = $this->getUrl(
+                    $moditem['delete'] = $this->mod()->getURL(
                         'admin',
                         'delete',
                         ['modid' => $modid,
@@ -103,7 +103,7 @@ class ViewMethod extends MethodClass
                     $data['numratings'] += $moditem['numratings'];
                 }
             }
-            $data['delete'] = $this->getUrl('admin', 'delete');
+            $data['delete'] = $this->mod()->getURL('admin', 'delete');
         } else {
             $modinfo = xarMod::getInfo($modid);
             if (empty($itemtype)) {
@@ -137,7 +137,7 @@ class ViewMethod extends MethodClass
             $data['numratings'] = 0;
             foreach ($data['moditems'] as $itemid => $moditem) {
                 $data['numratings'] += $moditem['numratings'];
-                $data['moditems'][$itemid]['delete'] = $this->getUrl(
+                $data['moditems'][$itemid]['delete'] = $this->mod()->getURL(
                     'admin',
                     'delete',
                     ['modid' => $modid,
@@ -145,7 +145,7 @@ class ViewMethod extends MethodClass
                         'itemid' => $itemid, ]
                 );
             }
-            $data['delete'] = $this->getUrl(
+            $data['delete'] = $this->mod()->getURL(
                 'admin',
                 'delete',
                 ['modid' => $modid,
@@ -155,7 +155,7 @@ class ViewMethod extends MethodClass
             if (empty($sort) || $sort == 'itemid') {
                 $data['sortlink']['itemid'] = '';
             } else {
-                $data['sortlink']['itemid'] = $this->getUrl(
+                $data['sortlink']['itemid'] = $this->mod()->getURL(
                     'admin',
                     'view',
                     ['modid' => $modid,
@@ -165,7 +165,7 @@ class ViewMethod extends MethodClass
             if (!empty($sort) && $sort == 'numratings') {
                 $data['sortlink']['numratings'] = '';
             } else {
-                $data['sortlink']['numratings'] = $this->getUrl(
+                $data['sortlink']['numratings'] = $this->mod()->getURL(
                     'admin',
                     'view',
                     ['modid' => $modid,
@@ -176,7 +176,7 @@ class ViewMethod extends MethodClass
             if (!empty($sort) && $sort == 'rating') {
                 $data['sortlink']['rating'] = '';
             } else {
-                $data['sortlink']['rating'] = $this->getUrl(
+                $data['sortlink']['rating'] = $this->mod()->getURL(
                     'admin',
                     'view',
                     ['modid' => $modid,

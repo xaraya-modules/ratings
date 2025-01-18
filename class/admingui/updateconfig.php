@@ -39,22 +39,22 @@ class UpdateconfigMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Get parameters
-        if (!$this->fetch('ratingsstyle', 'array', $ratingsstyle, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('ratingsstyle', $ratingsstyle, 'array')) {
             return;
         }
-        if (!$this->fetch('seclevel', 'array', $seclevel, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('seclevel', $seclevel, 'array')) {
             return;
         }
-        if (!$this->fetch('shownum', 'array', $shownum, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('shownum', $shownum, 'array')) {
             return;
         }
 
         // Confirm authorisation code
-        if (!$this->confirmAuthKey()) {
+        if (!$this->sec()->confirmAuthKey()) {
             return;
         }
         // Security Check
-        if (!$this->checkAccess('AdminRatings')) {
+        if (!$this->sec()->checkAccess('AdminRatings')) {
             return;
         }
 
@@ -89,32 +89,32 @@ class UpdateconfigMethod extends MethodClass
         foreach ($settings as $modname) {
             if ($modname == 'default') {
                 if (isset($ratingsstyle['default'])) {
-                    $this->setModVar('defaultratingsstyle', $ratingsstyle['default']);
+                    $this->mod()->setVar('defaultratingsstyle', $ratingsstyle['default']);
                 }
                 if (isset($seclevel['default'])) {
-                    $this->setModVar('seclevel', $seclevel['default']);
+                    $this->mod()->setVar('seclevel', $seclevel['default']);
                 }
                 if (!isset($shownum['default']) || $shownum['default'] != 1) {
-                    $this->setModVar('shownum', 0);
+                    $this->mod()->setVar('shownum', 0);
                 } else {
-                    $this->setModVar('shownum', 1);
+                    $this->mod()->setVar('shownum', 1);
                 }
             } else {
                 if (isset($ratingsstyle[$modname])) {
-                    xarModVars::set('ratings', "ratingsstyle.$modname", $ratingsstyle[$modname]);
+                    $this->mod()->setVar("ratingsstyle.$modname", $ratingsstyle[$modname]);
                 }
                 if (isset($seclevel[$modname])) {
-                    xarModVars::set('ratings', "seclevel.$modname", $seclevel[$modname]);
+                    $this->mod()->setVar("seclevel.$modname", $seclevel[$modname]);
                 }
                 if (!isset($shownum[$modname]) || $shownum[$modname] != 1) {
-                    xarModVars::set('ratings', "shownum.$modname", 0);
+                    $this->mod()->setVar("shownum.$modname", 0);
                 } else {
-                    xarModVars::set('ratings', "shownum.$modname", 1);
+                    $this->mod()->setVar("shownum.$modname", 1);
                 }
             }
         }
 
-        $this->redirect($this->getUrl('admin', 'modifyconfig'));
+        $this->ctl()->redirect($this->mod()->getURL('admin', 'modifyconfig'));
 
         return true;
     }

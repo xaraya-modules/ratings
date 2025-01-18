@@ -46,9 +46,9 @@ class GetMethod extends MethodClass
         // Argument check
         if ((!isset($modname)) ||
             (!isset($itemid))) {
-            $msg = $this->translate(
+            $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                $this->translate('module name or item id'),
+                $this->ml('module name or item id'),
                 'user',
                 'get',
                 'ratings'
@@ -57,9 +57,9 @@ class GetMethod extends MethodClass
         }
         $modid = xarMod::getRegID($modname);
         if (empty($modid)) {
-            $msg = $this->translate(
+            $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
-                $this->translate('module id'),
+                $this->ml('module id'),
                 'user',
                 'get',
                 'ratings'
@@ -72,7 +72,7 @@ class GetMethod extends MethodClass
         }
 
         // Security Check
-        if (!$this->checkAccess('ReadRatings')) {
+        if (!$this->sec()->checkAccess('ReadRatings')) {
             return;
         }
 

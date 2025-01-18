@@ -43,14 +43,14 @@ class ModifyconfigMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!$this->checkAccess('AdminRatings')) {
+        if (!$this->sec()->checkAccess('AdminRatings')) {
             return;
         }
 
-        if (!$this->fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('phase', $phase, 'str:1:100', 'modify')) {
             return;
         }
-        if (!$this->fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('tab', $data['tab'], 'str:1:100', 'general')) {
             return;
         }
 
@@ -64,12 +64,12 @@ class ModifyconfigMethod extends MethodClass
                 switch ($data['tab']) {
                     case 'general':
 
-                        $defaultratingsstyle = $this->getModVar('defaultratingsstyle');
-                        $defaultseclevel = $this->getModVar('seclevel');
-                        $defaultshownum = $this->getModVar('shownum');
+                        $defaultratingsstyle = $this->mod()->getVar('defaultratingsstyle');
+                        $defaultseclevel = $this->mod()->getVar('seclevel');
+                        $defaultshownum = $this->mod()->getVar('shownum');
 
                         $data['settings'] = [];
-                        $data['settings']['default'] = ['label' => $this->translate('Default configuration'),
+                        $data['settings']['default'] = ['label' => $this->ml('Default configuration'),
                             'ratingsstyle' => $defaultratingsstyle,
                             'seclevel' => $defaultseclevel,
                             'shownum' => $defaultshownum, ];
@@ -92,47 +92,47 @@ class ModifyconfigMethod extends MethodClass
                                         $mytypes = [];
                                     }
                                     foreach ($value as $itemtype => $val) {
-                                        $ratingsstyle = $this->getModVar("ratingsstyle.$modname.$itemtype");
+                                        $ratingsstyle = $this->mod()->getVar("ratingsstyle.$modname.$itemtype");
                                         if (empty($ratingsstyle)) {
                                             $ratingsstyle = $defaultratingsstyle;
                                         }
-                                        $seclevel = $this->getModVar("seclevel.$modname.$itemtype");
+                                        $seclevel = $this->mod()->getVar("seclevel.$modname.$itemtype");
                                         if (empty($seclevel)) {
                                             $seclevel = $defaultseclevel;
                                         }
-                                        $shownum = $this->getModVar("shownum.$modname.$itemtype");
+                                        $shownum = $this->mod()->getVar("shownum.$modname.$itemtype");
                                         if (empty($shownum)) {
                                             $shownum = $defaultshownum;
-                                            xarModVars::set('ratings', "shownum.$modname.$itemtype", $defaultshownum);
+                                            $this->mod()->setVar("shownum.$modname.$itemtype", $defaultshownum);
                                         }
                                         if (isset($mytypes[$itemtype])) {
                                             $type = $mytypes[$itemtype]['label'];
                                             $link = $mytypes[$itemtype]['url'];
                                         } else {
-                                            $type = $this->translate('type #(1)', $itemtype);
+                                            $type = $this->ml('type #(1)', $itemtype);
                                             $link = xarController::URL($modname, 'user', 'view', ['itemtype' => $itemtype]);
                                         }
-                                        $data['settings']["$modname.$itemtype"] = ['label' => $this->translate('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
+                                        $data['settings']["$modname.$itemtype"] = ['label' => $this->ml('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                             'ratingsstyle' => $ratingsstyle,
                                             'seclevel' => $seclevel,
                                             'shownum' => $shownum, ];
                                     }
                                 } else {
-                                    $ratingsstyle = $this->getModVar('ratingsstyle.' . $modname);
+                                    $ratingsstyle = $this->mod()->getVar('ratingsstyle.' . $modname);
                                     if (empty($ratingsstyle)) {
                                         $ratingsstyle = $defaultratingsstyle;
                                     }
-                                    $seclevel = $this->getModVar('seclevel.' . $modname);
+                                    $seclevel = $this->mod()->getVar('seclevel.' . $modname);
                                     if (empty($seclevel)) {
                                         $seclevel = $defaultseclevel;
                                     }
-                                    $shownum = $this->getModVar('shownum.' . $modname);
+                                    $shownum = $this->mod()->getVar('shownum.' . $modname);
                                     if (empty($shownum)) {
                                         $shownum = $defaultshownum;
-                                        xarModVars::set('ratings', "shownum.$modname", $defaultshownum);
+                                        $this->mod()->setVar("shownum.$modname", $defaultshownum);
                                     }
                                     $link = xarController::URL($modname, 'user', 'main');
-                                    $data['settings'][$modname] = ['label' => $this->translate('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
+                                    $data['settings'][$modname] = ['label' => $this->ml('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                         'ratingsstyle' => $ratingsstyle,
                                         'seclevel' => $seclevel,
                                         'shownum' => $shownum, ];
@@ -141,12 +141,12 @@ class ModifyconfigMethod extends MethodClass
                         }
 
                         $data['secleveloptions'] = [
-                            ['id' => 'low', 'name' => $this->translate('Low : users can vote multiple times')],
-                            ['id' => 'medium', 'name' => $this->translate('Medium : users can vote once per day')],
-                            ['id' => 'high', 'name' => $this->translate('High : users must be logged in and can only vote once')],
+                            ['id' => 'low', 'name' => $this->ml('Low : users can vote multiple times')],
+                            ['id' => 'medium', 'name' => $this->ml('Medium : users can vote once per day')],
+                            ['id' => 'high', 'name' => $this->ml('High : users must be logged in and can only vote once')],
                         ];
 
-                        $data['authid'] = $this->genAuthKey();
+                        $data['authid'] = $this->sec()->genAuthKey();
                         break;
                     case 'tab2':
                         break;
@@ -158,7 +158,7 @@ class ModifyconfigMethod extends MethodClass
                 break;
             case 'update':
                 // Confirm authorisation code
-                if (!$this->confirmAuthKey()) {
+                if (!$this->sec()->confirmAuthKey()) {
                     return xarController::badRequest('bad_author', $this->getContext());
                 }
                 switch ($data['tab']) {

@@ -65,7 +65,7 @@ class DeleteMethod extends MethodClass
             $bindvars = [];
             if (!empty($modid)) {
                 if (!is_numeric($modid)) {
-                    $msg = $this->translate(
+                    $msg = $this->ml(
                         'Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'module id',
                         'admin',

@@ -43,14 +43,14 @@ class MainMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Security Check
-        if (!$this->checkAccess('ManageRatings')) {
+        if (!$this->sec()->checkAccess('ManageRatings')) {
             return;
         }
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return [];
         } else {
-            $this->redirect($this->getUrl('admin', 'view'));
+            $this->ctl()->redirect($this->mod()->getURL('admin', 'view'));
         }
         // success
         return true;
