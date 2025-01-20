@@ -77,8 +77,8 @@ class TopitemsMethod extends MethodClass
         }
 
         // Database information
-        $dbconn = xarDB::getConn();
-        $xartable = & xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable = & $this->db()->getTables();
         $ratingstable = $xartable['ratings'];
 
         // Get items

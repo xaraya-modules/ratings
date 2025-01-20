@@ -75,8 +75,8 @@ class DeleteallMethod extends MethodClass
             return;
         }
 
-        $dbconn = xarDB::getConn();
-        $xartable = & xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable = & $this->db()->getTables();
         $ratingstable = $xartable['ratings'];
 
         $query = "DELETE FROM $ratingstable

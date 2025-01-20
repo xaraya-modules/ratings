@@ -57,8 +57,8 @@ class DeleteMethod extends MethodClass
             // if we're coming from the delete GUI (or elsewhere)
         } elseif (!empty($confirm)) {
             // Database information
-            $dbconn = xarDB::getConn();
-            $xartable = & xarDB::getTables();
+            $dbconn = $this->db()->getConn();
+            $xartable = & $this->db()->getTables();
             $ratingstable = $xartable['ratings'];
 
             $query = "DELETE FROM $ratingstable ";

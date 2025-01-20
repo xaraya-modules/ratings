@@ -86,7 +86,7 @@ class LeftjoinMethod extends MethodClass
         }
 
         // Table definition
-        $xartable = & xarDB::getTables();
+        $xartable = & $this->db()->getTables();
         $userstable = $xartable['ratings'];
 
         $leftjoin = [];
