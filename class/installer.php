@@ -66,8 +66,8 @@ class Installer extends InstallerClass
         #
         # Set tables
         #
-        $dbconn = xarDB::getConn();
-        $xartable = & xarDB::getTables();
+        $dbconn = $this->db()->getConn();
+        $xartable = & $this->db()->getTables();
         // Load Table Maintainance API
         sys::import('xaraya.tableddl');
         // Create table
@@ -93,7 +93,7 @@ class Installer extends InstallerClass
         // TODO: compare with having 2 indexes (cfr. hitcount)
         $query = xarTableDDL::createIndex(
             $xartable['ratings'],
-            ['name' => 'i_' . xarDB::getPrefix() . '_ratingcombo',
+            ['name' => 'i_' . $this->db()->getPrefix() . '_ratingcombo',
                 'fields' => ['module_id', 'itemtype', 'itemid'],
                 'unique' => true, ]
         );
@@ -105,7 +105,7 @@ class Installer extends InstallerClass
 
         $query = xarTableDDL::createIndex(
             $xartable['ratings'],
-            ['name' => 'i_' . xarDB::getPrefix() . '_rating',
+            ['name' => 'i_' . $this->db()->getPrefix() . '_rating',
                 'fields' => ['rating'],
                 'unique' => false, ]
         );
@@ -147,7 +147,7 @@ class Installer extends InstallerClass
 
         $query = xarTableDDL::createIndex(
             $xartable['ratings_likes'],
-            ['name'   => 'i_' . xarDB::getPrefix() . '_likecombo',
+            ['name'   => 'i_' . $this->db()->getPrefix() . '_likecombo',
                 'fields' => ['object_id', 'itemid'],
                 'unique' => false, ]
         );
@@ -159,7 +159,7 @@ class Installer extends InstallerClass
 
         $query = xarTableDDL::createIndex(
             $xartable['ratings_likes'],
-            ['name'   => 'i_' . xarDB::getPrefix() . '_role_id',
+            ['name'   => 'i_' . $this->db()->getPrefix() . '_role_id',
                 'fields' => ['role_id'],
                 'unique' => false, ]
         );
@@ -171,7 +171,7 @@ class Installer extends InstallerClass
 
         $query = xarTableDDL::createIndex(
             $xartable['ratings_likes'],
-            ['name'   => 'i_' . xarDB::getPrefix() . '_udid',
+            ['name'   => 'i_' . $this->db()->getPrefix() . '_udid',
                 'fields' => ['udid'],
                 'unique' => false, ]
         );
@@ -354,8 +354,8 @@ class Installer extends InstallerClass
 
                 // modify field xar_ratings.rating
                 // Get database information
-                $dbconn = xarDB::getConn();
-                $xartable = & xarDB::getTables();
+                $dbconn = $this->db()->getConn();
+                $xartable = & $this->db()->getTables();
                 $query = "ALTER TABLE " . $xartable['ratings'] . "
                                MODIFY COLUMN rating double(8,5) NOT NULL default '0.00000'";
                 $result = & $dbconn->Execute($query);

@@ -20,13 +20,14 @@
  * @throws  no exceptions
  * @todo    nothing
 */
-function ratings_xartables()
+function ratings_xartables(?string $prefix = null)
 {
     // Initialise table array
     $xartable = [];
+    $prefix ??= xarDB::getPrefix();
     // Name for ratings database entities
-    $xartable['ratings'] = xarDB::getPrefix() . '_ratings';
-    $xartable['ratings_likes'] = xarDB::getPrefix() . '_ratings_likes';
+    $xartable['ratings'] = $prefix . '_ratings';
+    $xartable['ratings_likes'] = $prefix . '_ratings_likes';
     // Return table information
     return $xartable;
 }
