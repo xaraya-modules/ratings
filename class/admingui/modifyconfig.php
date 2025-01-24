@@ -110,7 +110,7 @@ class ModifyconfigMethod extends MethodClass
                                             $link = $mytypes[$itemtype]['url'];
                                         } else {
                                             $type = $this->ml('type #(1)', $itemtype);
-                                            $link = xarController::URL($modname, 'user', 'view', ['itemtype' => $itemtype]);
+                                            $link = $this->ctl()->getModuleURL($modname, 'user', 'view', ['itemtype' => $itemtype]);
                                         }
                                         $data['settings']["$modname.$itemtype"] = ['label' => $this->ml('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                             'ratingsstyle' => $ratingsstyle,
@@ -131,7 +131,7 @@ class ModifyconfigMethod extends MethodClass
                                         $shownum = $defaultshownum;
                                         $this->mod()->setVar("shownum.$modname", $defaultshownum);
                                     }
-                                    $link = xarController::URL($modname, 'user', 'main');
+                                    $link = $this->ctl()->getModuleURL($modname, 'user', 'main');
                                     $data['settings'][$modname] = ['label' => $this->ml('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                         'ratingsstyle' => $ratingsstyle,
                                         'seclevel' => $seclevel,
