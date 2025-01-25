@@ -39,6 +39,7 @@ class MainMethod extends MethodClass
      * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
      * @link http://xaraya.com/index.php/release/41.html
      * @author Jim McDonald
+     * @see AdminGui::main()
      */
     public function __invoke(array $args = [])
     {

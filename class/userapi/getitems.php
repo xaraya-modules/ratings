@@ -39,6 +39,7 @@ class GetitemsMethod extends MethodClass
      * @var mixed $itemids array of item IDs
      * @var mixed $sort string sort by itemid (default), rating or numratings
      * @return array|void $array[$itemid] = array('numratings' => $numratings, 'rating' => $rating)
+     * @see UserApi::getitems()
      */
     public function __invoke(array $args = [])
     {

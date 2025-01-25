@@ -30,6 +30,7 @@ class MainMethod extends MethodClass
     /**
      * the main user function
      * @return string
+     * @see UserGui::main()
      */
     public function __invoke(array $args = [])
     {

@@ -17,7 +17,6 @@
  * @access  public
  * @param   none
  * @return  $xartable array
- * @throws  no exceptions
  * @todo    nothing
 */
 function ratings_xartables(?string $prefix = null)

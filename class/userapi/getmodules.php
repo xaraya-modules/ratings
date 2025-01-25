@@ -31,7 +31,8 @@ class GetmodulesMethod extends MethodClass
 
     /**
      * get the list of modules for which we're rating items
-     * @return array $array[$modid][$itemtype] = array('items' => $numitems,'ratings' => $numratings);
+     * @return array|void $array[$modid][$itemtype] = array('items' => $numitems,'ratings' => $numratings);
+     * @see UserApi::getmodules()
      */
     public function __invoke(array $args = [])
     {

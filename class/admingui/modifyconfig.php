@@ -39,6 +39,7 @@ class ModifyconfigMethod extends MethodClass
      * @author Jim McDonald
      * @access public
      * @return true|string|void on success or void on failure
+     * @see AdminGui::modifyconfig()
      */
     public function __invoke(array $args = [])
     {
@@ -159,7 +160,7 @@ class ModifyconfigMethod extends MethodClass
             case 'update':
                 // Confirm authorisation code
                 if (!$this->sec()->confirmAuthKey()) {
-                    return $this->ctl()->badRequest('bad_author', $this->getContext());
+                    return $this->ctl()->badRequest('bad_author');
                 }
                 switch ($data['tab']) {
                     case 'general':
@@ -175,7 +176,6 @@ class ModifyconfigMethod extends MethodClass
 
                         // Return
                         return true;
-                        break;
                     case 'tab2':
                         break;
                     case 'tab3':

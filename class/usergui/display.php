@@ -13,6 +13,7 @@ namespace Xaraya\Modules\Ratings\UserGui;
 
 
 use Xaraya\Modules\Ratings\UserGui;
+use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarMod;
 use xarModVars;
@@ -46,10 +47,13 @@ class DisplayMethod extends MethodClass
      * @var mixed $showinput bool to show rating form (optional)
      * @var mixed $itemtype item type
      * @return array|void output with rating information $numratings, $rating, $rated, $authid
+     * @see UserGui::display()
      */
     public function __invoke(array $args = [])
     {
         extract($args);
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
 
         if (!empty($extrainfo['itemid'])) {
             $itemid = $extrainfo['itemid'];
@@ -148,11 +152,7 @@ class DisplayMethod extends MethodClass
 
         // Run API function
         // Bug 6160 Use getitems at first, then get if we get weird results
-        $rating = xarMod::apiFunc(
-            'ratings',
-            'user',
-            'getitems',
-            $args
+        $rating = $userapi->getitems($args
         );
         // Select the way to get the rating
         if (!empty($rating[$itemid])) {
@@ -161,11 +161,7 @@ class DisplayMethod extends MethodClass
         } else {
             // Use old fashioned way
             $args['itemid'] = $itemid;
-            $data['rawrating'] = xarMod::apiFunc(
-                'ratings',
-                'user',
-                'get',
-                $args
+            $data['rawrating'] = $userapi->get($args
             );
             $data['numratings'] = 0;
         }

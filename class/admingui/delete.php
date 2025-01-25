@@ -13,6 +13,7 @@ namespace Xaraya\Modules\Ratings\AdminGui;
 
 
 use Xaraya\Modules\Ratings\AdminGui;
+use Xaraya\Modules\Ratings\AdminApi;
 use Xaraya\Modules\MethodClass;
 use xarSecurity;
 use xarVar;
@@ -34,9 +35,12 @@ class DeleteMethod extends MethodClass
 
     /**
      * Delete ratings of module items
+     * @see AdminGui::delete()
      */
     public function __invoke(array $args = [])
     {
+        /** @var AdminApi $adminapi */
+        $adminapi = $this->adminapi();
         // Security Check
         if (!$this->sec()->checkAccess('DeleteRatings')) {
             return;
@@ -90,11 +94,7 @@ class DeleteMethod extends MethodClass
         if (!$this->sec()->confirmAuthKey()) {
             return;
         }
-        if (!xarMod::apiFunc(
-            'ratings',
-            'admin',
-            'delete',
-            ['modid' => $modid,
+        if (!$adminapi->delete(['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
                 'confirm' => $confirm, ]

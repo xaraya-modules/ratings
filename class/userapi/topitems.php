@@ -38,6 +38,7 @@ class TopitemsMethod extends MethodClass
      * @var mixed $numitems number of items to return
      * @var mixed $startnum start at this number (1-based)
      * @return array|void of array('itemid' => $itemid, 'hits' => $hits)
+     * @see UserApi::topitems()
      */
     public function __invoke(array $args = [])
     {

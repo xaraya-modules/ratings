@@ -82,13 +82,13 @@ class Installer extends InstallerClass
         // raise an exception if it fails, in this case $query is empty
         $query = xarTableDDL::createTable($xartable['ratings'], $fields);
         if (empty($query)) {
-            return;
+            return false;
         } // throw back
 
         // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
         $result = $dbconn->Execute($query);
         if (!$result) {
-            return;
+            return false;
         }
         // TODO: compare with having 2 indexes (cfr. hitcount)
         $query = xarTableDDL::createIndex(
@@ -100,7 +100,7 @@ class Installer extends InstallerClass
 
         $result = $dbconn->Execute($query);
         if (!$result) {
-            return;
+            return false;
         }
 
         $query = xarTableDDL::createIndex(
@@ -112,7 +112,7 @@ class Installer extends InstallerClass
 
         $result = $dbconn->Execute($query);
         if (!$result) {
-            return;
+            return false;
         }
 
         $query = xarTableDDL::createTable(
@@ -142,7 +142,7 @@ class Installer extends InstallerClass
 
         $result = $dbconn->Execute($query);
         if (!$result) {
-            return;
+            return false;
         }
 
         $query = xarTableDDL::createIndex(
@@ -154,7 +154,7 @@ class Installer extends InstallerClass
 
         $result = $dbconn->Execute($query);
         if (!$result) {
-            return;
+            return false;
         }
 
         $query = xarTableDDL::createIndex(
@@ -166,7 +166,7 @@ class Installer extends InstallerClass
 
         $result = $dbconn->Execute($query);
         if (!$result) {
-            return;
+            return false;
         }
 
         $query = xarTableDDL::createIndex(
@@ -178,7 +178,7 @@ class Installer extends InstallerClass
 
         $result = $dbconn->Execute($query);
         if (!$result) {
-            return;
+            return false;
         }
 
         # --------------------------------------------------------
@@ -360,7 +360,7 @@ class Installer extends InstallerClass
                                MODIFY COLUMN rating double(8,5) NOT NULL default '0.00000'";
                 $result = & $dbconn->Execute($query);
                 if (!$result) {
-                    return;
+                    return false;
                 }
         }
         return true;
@@ -381,7 +381,7 @@ class Installer extends InstallerClass
             'user',
             'display'
         )) {
-            return;
+            return false;
         }
 
         if (!xarModHooks::unregister(
@@ -392,7 +392,7 @@ class Installer extends InstallerClass
             'admin',
             'deleteall'
         )) {
-            return;
+            return false;
         }
         return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => 'ratings']);
     }

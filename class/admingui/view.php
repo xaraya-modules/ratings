@@ -13,6 +13,7 @@ namespace Xaraya\Modules\Ratings\AdminGui;
 
 
 use Xaraya\Modules\Ratings\AdminGui;
+use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarSecurity;
 use xarVar;
@@ -33,9 +34,12 @@ class ViewMethod extends MethodClass
 
     /**
      * View statistics about ratings
+     * @see AdminGui::view()
      */
     public function __invoke(array $args = [])
     {
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
         // Security Check
         if (!$this->sec()->checkAccess('AdminRatings')) {
             return;
@@ -57,7 +61,7 @@ class ViewMethod extends MethodClass
         $data = [];
 
         if (empty($modid)) {
-            $modlist = xarMod::apiFunc('ratings', 'user', 'getmodules');
+            $modlist = $userapi->getmodules();
 
             $data['moditems'] = [];
             $data['numitems'] = 0;
@@ -126,11 +130,7 @@ class ViewMethod extends MethodClass
             }
 
             $data['modid'] = $modid;
-            $data['moditems'] = xarMod::apiFunc(
-                'ratings',
-                'user',
-                'getitems',
-                ['modid' => $modid,
+            $data['moditems'] = $userapi->getitems(['modid' => $modid,
                     'itemtype' => $itemtype,
                     'sort' => $sort, ]
             );

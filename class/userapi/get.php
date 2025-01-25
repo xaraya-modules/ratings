@@ -37,6 +37,7 @@ class GetMethod extends MethodClass
      * @var mixed $itemtype item type (optional)
      * @var mixed $itemid ID of the item this rating is for
      * @return int|void rating the corresponding rating, or void if no rating exists
+     * @see UserApi::get()
      */
     public function __invoke(array $args = [])
     {

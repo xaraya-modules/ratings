@@ -42,6 +42,7 @@ class RateMethod extends MethodClass
      * @var mixed $itemid ID of the item to rate
      * @var mixed $rating actual rating
      * @return int|void the new rating for this item
+     * @see UserApi::rate()
      */
     public function __invoke(array $args = [])
     {

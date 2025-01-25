@@ -13,6 +13,7 @@ namespace Xaraya\Modules\Ratings\UserGui;
 
 
 use Xaraya\Modules\Ratings\UserGui;
+use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
 use xarVar;
 use xarSec;
@@ -34,10 +35,13 @@ class RateMethod extends MethodClass
 
     /**
      *
-     * @return bool true
+     * @return bool|void true
+     * @see UserGui::rate()
      */
     public function __invoke(array $args = [])
     {
+        /** @var UserApi $userapi */
+        $userapi = $this->userapi();
         // Get parameters
         if (!$this->var()->check('modname', $modname)) {
             return;
@@ -61,11 +65,7 @@ class RateMethod extends MethodClass
         }
 
         // Pass to API
-        $newrating = xarMod::apiFunc(
-            'ratings',
-            'user',
-            'rate',
-            ['modname'    => $modname,
+        $newrating = $userapi->rate(['modname'    => $modname,
                 'itemtype'   => $itemtype,
                 'itemid'     => $itemid,
                 'rating'     => $rating, ]

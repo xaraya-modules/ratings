@@ -51,6 +51,7 @@ class LeftjoinMethod extends MethodClass
      * // ...
      * 'rating'  => '[SitePrefix]_ratings.rating')
      * @return array|void
+     * @see UserApi::leftjoin()
      */
     public function __invoke(array $args = [])
     {

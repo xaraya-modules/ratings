@@ -29,6 +29,7 @@ class GetstylesMethod extends MethodClass
 
     /**
      * get the rating styles
+     * @see UserApi::getstyles()
      */
     public function __invoke(array $args = [])
     {
