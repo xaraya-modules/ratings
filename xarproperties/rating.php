@@ -145,7 +145,7 @@ class RatingProperty extends FloatBoxProperty
     private function checkForUpdate()
     {
         // check for 'preview' argument
-        $this->var()->fetch('preview', 'isset', $preview, null, xarVar::DONT_SET);
+        $this->var()->check('preview', $preview);
 
         // if we're previewing an item, don't update
         if (!empty($preview)) {
