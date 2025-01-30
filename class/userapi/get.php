@@ -56,7 +56,7 @@ class GetMethod extends MethodClass
             );
             throw new Exception($msg);
         }
-        $modid = xarMod::getRegID($modname);
+        $modid = $this->mod()->getRegID($modname);
         if (empty($modid)) {
             $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',

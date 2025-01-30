@@ -62,7 +62,7 @@ class RateMethod extends MethodClass
             );
             throw new Exception($msg);
         }
-        $modid = xarMod::getRegID($modname);
+        $modid = $this->mod()->getRegID($modname);
         if (empty($modid)) {
             $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -118,7 +118,7 @@ class RateMethod extends MethodClass
                     return;
                 }
             } else {
-                $rated = xarSession::getVar('ratings:' . $modname . ':' . $itemtype . ':' . $itemid);
+                $rated = $this->session()->getVar('ratings:' . $modname . ':' . $itemtype . ':' . $itemid);
                 if (!empty($rated) && $rated > time() - 24 * 60 * 60) {
                     return;
                 }
@@ -196,13 +196,13 @@ class RateMethod extends MethodClass
             if (xarUser::isLoggedIn()) {
                 xarModUserVars::set('ratings', $modname . ':' . $itemtype . ':' . $itemid, time());
             } else {
-                xarSession::setVar('ratings:' . $modname . ':' . $itemtype . ':' . $itemid, time());
+                $this->session()->setVar('ratings:' . $modname . ':' . $itemtype . ':' . $itemid, time());
             }
         }
         // CHECKME: find some cleaner way to update the page cache if necessary
         if (function_exists('xarOutputFlushCached') &&
             xarModVars::get('cachemanager', 'FlushOnNewRating')) {
-            $modinfo = xarMod::getInfo($modid);
+            $modinfo = $this->mod()->getInfo($modid);
             // this may not be agressive enough flushing for all sites
             // we could flush "$modinfo[name]-" to remove all output cache associated with a module
             xarOutputFlushCached("$modinfo[name]-user-display-");

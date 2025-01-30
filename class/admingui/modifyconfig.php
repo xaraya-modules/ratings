@@ -55,7 +55,7 @@ class ModifyconfigMethod extends MethodClass
             return;
         }
 
-        $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'ratings']);
+        $data['module_settings'] = $this->mod()->apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'ratings']);
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
         $data['module_settings']->getItem();
 
@@ -75,7 +75,7 @@ class ModifyconfigMethod extends MethodClass
                             'seclevel' => $defaultseclevel,
                             'shownum' => $defaultshownum, ];
 
-                        $hookedmodules = xarMod::apiFunc(
+                        $hookedmodules = $this->mod()->apiFunc(
                             'modules',
                             'admin',
                             'gethookedmodules',
@@ -88,7 +88,7 @@ class ModifyconfigMethod extends MethodClass
                                 if (!isset($value[0])) {
                                     // Get the list of all item types for this module (if any)
                                     try {
-                                        $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes');
+                                        $mytypes = $this->mod()->apiFunc($modname, 'user', 'getitemtypes');
                                     } catch (Exception $e) {
                                         $mytypes = [];
                                     }

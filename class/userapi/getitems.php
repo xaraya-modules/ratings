@@ -58,7 +58,7 @@ class GetitemsMethod extends MethodClass
             throw new Exception($msg);
         }
         if (!empty($modname)) {
-            $modid = xarMod::getRegID($modname);
+            $modid = $this->mod()->getRegID($modname);
         }
         if (empty($modid)) {
             $msg = $this->ml(

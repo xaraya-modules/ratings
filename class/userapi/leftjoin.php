@@ -62,7 +62,7 @@ class LeftjoinMethod extends MethodClass
         if (!isset($modname)) {
             $modname = '';
         } else {
-            $modid = xarMod::getRegID($modname);
+            $modid = $this->mod()->getRegID($modname);
         }
         if (!isset($modid)) {
             $modid = '';

@@ -93,7 +93,7 @@ class DeleteMethod extends MethodClass
                 return;
             }
 
-            // TODO: delete user votes with xarModVars::delete('ratings',"$modname:$itemtype:$itemid");
+            // TODO: delete user votes with $this->mod()->delVar("$modname:$itemtype:$itemid");
 
             return true;
         }

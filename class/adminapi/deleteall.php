@@ -57,7 +57,7 @@ class DeleteallMethod extends MethodClass
             throw new Exception($msg);
         }
 
-        $modid = xarMod::getRegID($objectid);
+        $modid = $this->mod()->getRegID($objectid);
         if (empty($modid)) {
             $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -90,7 +90,7 @@ class DeleteallMethod extends MethodClass
         // hmmm, I think we'll skip calling more hooks here... :-)
         //xarModHooks::call('item', 'delete', '', '');
 
-        // TODO: delete user votes with xarModVars::delete('ratings',"$modname:$itemtype:$itemid");
+        // TODO: delete user votes with $this->mod()->delVar("$modname:$itemtype:$itemid");
 
         // Return the extra info
         if (!isset($extrainfo)) {

@@ -61,7 +61,7 @@ class UpdateconfigMethod extends MethodClass
 
         $settings = ['default'];
 
-        $hookedmodules = xarMod::apiFunc(
+        $hookedmodules = $this->mod()->apiFunc(
             'modules',
             'admin',
             'gethookedmodules',
@@ -74,7 +74,7 @@ class UpdateconfigMethod extends MethodClass
                 if (!isset($value[0])) {
                     // Get the list of all item types for this module (if any)
                     try {
-                        $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes');
+                        $mytypes = $this->mod()->apiFunc($modname, 'user', 'getitemtypes');
                     } catch (Exception $e) {
                         $mytypes = [];
                     }

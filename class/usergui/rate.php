@@ -73,7 +73,7 @@ class RateMethod extends MethodClass
 
         if (isset($newrating)) {
             // Success
-            xarSession::setVar('ratings_statusmsg', $this->ml(
+            $this->session()->setVar('ratings_statusmsg', $this->ml(
                 'Thank you for rating this item.',
                 'ratings'
             ));

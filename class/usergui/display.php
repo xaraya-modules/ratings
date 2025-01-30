@@ -94,7 +94,7 @@ class DisplayMethod extends MethodClass
         }
 
         if (empty($modname)) {
-            $modname = xarMod::getName();
+            $modname = $this->mod()->getName();
         }
         //    $args['modname'] = $modname;
         //    $args['itemtype'] = $itemtype;
@@ -243,7 +243,7 @@ class DisplayMethod extends MethodClass
                     $data['rated'] = true;
                 }
             } else {
-                $rated = xarSession::getVar('ratings:' . $modname . ':' . $itemtype . ':' . $itemid);
+                $rated = $this->session()->getVar('ratings:' . $modname . ':' . $itemtype . ':' . $itemid);
                 if (!empty($rated) && $rated > time() - 24 * 60 * 60) {
                     $data['rated'] = true;
                 }

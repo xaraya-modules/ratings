@@ -83,21 +83,21 @@ class RatingProperty extends FloatBoxProperty
             if (!isset($this->hitcache)) {
                 if (!empty($update) && $this->checkForUpdate()) {
                     // update the hitcount for this item
-                    $this->hitcache = xarMod::apiFunc(
+                    $this->hitcache = $this->mod()->apiFunc(
                         'hitcount',
                         'admin',
                         'update',
-                        ['modname'  => xarMod::getName($this->objectref->moduleid),
+                        ['modname'  => $this->mod()->getName($this->objectref->moduleid),
                                                             'itemtype' => $this->objectref->itemtype,
                                                             'objectid' => $this->objectref->itemid, ]
                     );
                 } else {
                     // get the hitcount for this item
-                    $this->hitcache = xarMod::apiFunc(
+                    $this->hitcache = $this->mod()->apiFunc(
                         'hitcount',
                         'user',
                         'get',
-                        ['modname'  => xarMod::getName($this->objectref->moduleid),
+                        ['modname'  => $this->mod()->getName($this->objectref->moduleid),
                                                             'itemtype' => $this->objectref->itemtype,
                                                             'objectid' => $this->objectref->itemid, ]
                     );
@@ -112,7 +112,7 @@ class RatingProperty extends FloatBoxProperty
         } elseif (!empty($this->_items) && isset($data['value']) && !empty($this->_items[$data['value']])) {
             if (!isset($this->hitcache)) {
                 // get the hitcount for all the items in the objectref
-                $this->hitcache = xarMod::apiFunc(
+                $this->hitcache = $this->mod()->apiFunc(
                     'hitcount',
                     'user',
                     'getitems',
@@ -183,11 +183,11 @@ class RatingProperty extends FloatBoxProperty
             return;
         }
         // delete hitcount entry
-        xarMod::apiFunc(
+        $this->mod()->apiFunc(
             'hitcount',
             'admin',
             'delete',
-            ['modname'  => xarMod::getName($this->objectref->moduleid),
+            ['modname'  => $this->mod()->getName($this->objectref->moduleid),
                               'itemtype' => $this->objectref->itemtype,
                               'objectid' => $itemid, ]
         );
