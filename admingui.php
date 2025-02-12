@@ -15,7 +15,7 @@ use Xaraya\Modules\AdminGuiClass;
 use sys;
 
 sys::import('xaraya.modules.admingui');
-sys::import('modules.ratings.class.adminapi');
+sys::import('modules.ratings.adminapi');
 
 /**
  * Handle the ratings admin GUI

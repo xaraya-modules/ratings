@@ -15,7 +15,7 @@ use Xaraya\Modules\UserGuiClass;
 use sys;
 
 sys::import('xaraya.modules.usergui');
-sys::import('modules.ratings.class.userapi');
+sys::import('modules.ratings.userapi');
 
 /**
  * Handle the ratings user GUI
