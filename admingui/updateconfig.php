@@ -40,15 +40,9 @@ class UpdateconfigMethod extends MethodClass
     public function __invoke(array $args = [])
     {
         // Get parameters
-        if (!$this->var()->find('ratingsstyle', $ratingsstyle, 'array')) {
-            return;
-        }
-        if (!$this->var()->find('seclevel', $seclevel, 'array')) {
-            return;
-        }
-        if (!$this->var()->find('shownum', $shownum, 'array')) {
-            return;
-        }
+        $this->var()->find('ratingsstyle', $ratingsstyle, 'array');
+        $this->var()->find('seclevel', $seclevel, 'array');
+        $this->var()->find('shownum', $shownum, 'array');
 
         // Confirm authorisation code
         if (!$this->sec()->confirmAuthKey()) {

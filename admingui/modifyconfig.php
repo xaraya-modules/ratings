@@ -48,12 +48,8 @@ class ModifyconfigMethod extends MethodClass
             return;
         }
 
-        if (!$this->var()->find('phase', $phase, 'str:1:100', 'modify')) {
-            return;
-        }
-        if (!$this->var()->find('tab', $data['tab'], 'str:1:100', 'general')) {
-            return;
-        }
+        $this->var()->find('phase', $phase, 'str:1:100', 'modify');
+        $this->var()->find('tab', $data['tab'], 'str:1:100', 'general');
 
         $data['module_settings'] = $this->mod()->apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'ratings']);
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');

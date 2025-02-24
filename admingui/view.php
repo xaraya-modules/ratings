@@ -45,18 +45,10 @@ class ViewMethod extends MethodClass
             return;
         }
 
-        if (!$this->var()->check('modid', $modid)) {
-            return;
-        }
-        if (!$this->var()->check('itemtype', $itemtype)) {
-            return;
-        }
-        if (!$this->var()->check('itemid', $itemid)) {
-            return;
-        }
-        if (!$this->var()->check('sort', $sort)) {
-            return;
-        }
+        $this->var()->check('modid', $modid);
+        $this->var()->check('itemtype', $itemtype);
+        $this->var()->check('itemid', $itemid);
+        $this->var()->check('sort', $sort);
 
         $data = [];
 

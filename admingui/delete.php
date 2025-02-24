@@ -46,18 +46,10 @@ class DeleteMethod extends MethodClass
             return;
         }
 
-        if (!$this->var()->check('modid', $modid)) {
-            return;
-        }
-        if (!$this->var()->check('itemtype', $itemtype)) {
-            return;
-        }
-        if (!$this->var()->check('itemid', $itemid)) {
-            return;
-        }
-        if (!$this->var()->find('confirm', $confirm, 'str:1:', '')) {
-            return;
-        }
+        $this->var()->check('modid', $modid);
+        $this->var()->check('itemtype', $itemtype);
+        $this->var()->check('itemid', $itemid);
+        $this->var()->find('confirm', $confirm, 'str:1:', '');
 
         // Check for confirmation.
         if (empty($confirm)) {

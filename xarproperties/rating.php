@@ -152,7 +152,7 @@ class RatingProperty extends FloatBoxProperty
             return false;
 
             // if we don't count admin hits and the user is an admin, don't update
-        } elseif (!xarModVars::get('hitcount', 'countadmin') && $this->sec()->checkAccess('AdminHitcount', 0)) {
+        } elseif (!$this->mod('hitcount')->getVar('countadmin') && $this->sec()->checkAccess('AdminHitcount', 0)) {
             return false;
         } else {
             return true;

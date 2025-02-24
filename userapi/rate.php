@@ -201,7 +201,7 @@ class RateMethod extends MethodClass
         }
         // CHECKME: find some cleaner way to update the page cache if necessary
         if (function_exists('xarOutputFlushCached') &&
-            xarModVars::get('cachemanager', 'FlushOnNewRating')) {
+            $this->mod('cachemanager')->getVar('FlushOnNewRating')) {
             $modinfo = $this->mod()->getInfo($modid);
             // this may not be agressive enough flushing for all sites
             // we could flush "$modinfo[name]-" to remove all output cache associated with a module
