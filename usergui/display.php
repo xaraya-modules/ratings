@@ -218,11 +218,11 @@ class DisplayMethod extends MethodClass
         }
         if ($seclevel == 'high') {
             // Check to see if user has already voted
-            if (xarUser::isLoggedIn()) {
+            if ($this->user()->isLoggedIn()) {
                 if (!$this->mod()->getVar($modname . ':' . $itemtype . ':' . $itemid)) {
                     $this->mod()->setVar($modname . ':' . $itemtype . ':' . $itemid, 1);
                 }
-                $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);
+                $rated = $this->mod()->getUserVar($modname . ':' . $itemtype . ':' . $itemid);
                 if (!empty($rated) && $rated > 1) {
                     $data['rated'] = true;
                 }
@@ -234,11 +234,11 @@ class DisplayMethod extends MethodClass
             }
         } elseif ($seclevel == 'medium') {
             // Check to see if user has already voted
-            if (xarUser::isLoggedIn()) {
+            if ($this->user()->isLoggedIn()) {
                 if (!$this->mod()->getVar($modname . ':' . $itemtype . ':' . $itemid)) {
                     $this->mod()->setVar($modname . ':' . $itemtype . ':' . $itemid, 1);
                 }
-                $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);
+                $rated = $this->mod()->getUserVar($modname . ':' . $itemtype . ':' . $itemid);
                 if (!empty($rated) && $rated > time() - 24 * 60 * 60) {
                     $data['rated'] = true;
                 }

@@ -102,8 +102,8 @@ class RateMethod extends MethodClass
             $seclevel = $this->mod()->getVar('seclevel');
         }
         if ($seclevel == 'high') {
-            if (xarUser::isLoggedIn()) {
-                $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);
+            if ($this->user()->isLoggedIn()) {
+                $rated = $this->mod()->getUserVar($modname . ':' . $itemtype . ':' . $itemid);
                 if (!empty($rated) && $rated > 1) {
                     return;
                 }
@@ -112,8 +112,8 @@ class RateMethod extends MethodClass
             }
         } elseif ($seclevel == 'medium') {
             // Check to see if user has already voted
-            if (xarUser::isLoggedIn()) {
-                $rated = xarModUserVars::get('ratings', $modname . ':' . $itemtype . ':' . $itemid);
+            if ($this->user()->isLoggedIn()) {
+                $rated = $this->mod()->getUserVar($modname . ':' . $itemtype . ':' . $itemid);
                 if (!empty($rated) && $rated > time() - 24 * 60 * 60) {
                     return;
                 }
@@ -187,14 +187,14 @@ class RateMethod extends MethodClass
 
         // Set note that user has rated this item if required
         if ($seclevel == 'high') {
-            if (xarUser::isLoggedIn()) {
-                xarModUserVars::set('ratings', $modname . ':' . $itemtype . ':' . $itemid, time());
+            if ($this->user()->isLoggedIn()) {
+                $this->mod()->setUserVar($modname . ':' . $itemtype . ':' . $itemid, time());
             } else {
                 // nope
             }
         } elseif ($seclevel == 'medium') {
-            if (xarUser::isLoggedIn()) {
-                xarModUserVars::set('ratings', $modname . ':' . $itemtype . ':' . $itemid, time());
+            if ($this->user()->isLoggedIn()) {
+                $this->mod()->setUserVar($modname . ':' . $itemtype . ':' . $itemid, time());
             } else {
                 $this->session()->setVar('ratings:' . $modname . ':' . $itemtype . ':' . $itemid, time());
             }
