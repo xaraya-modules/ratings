@@ -79,7 +79,7 @@ class RateMethod extends MethodClass
         }
 
         // Security Check
-        if (!xarSecurity::check('CommentRatings', 1, 'Item', "$modname:$itemtype:$itemid")) {
+        if (!$this->sec()->check('CommentRatings', 1, 'Item', "$modname:$itemtype:$itemid")) {
             return;
         }
 

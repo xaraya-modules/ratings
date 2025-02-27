@@ -252,7 +252,7 @@ class DisplayMethod extends MethodClass
 
         // module name is mandatory here, because this is displayed via hooks (= from within another module)
         // set an authid, but only if the current user can rate the item
-        if (xarSecurity::check('CommentRatings', 0, 'Item', "$modname:$itemtype:$itemid")) {
+        if ($this->sec()->check('CommentRatings', 0, 'Item', "$modname:$itemtype:$itemid")) {
             $data['authid'] = $this->sec()->genAuthKey();
         }
         return $data;
