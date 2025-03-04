@@ -116,10 +116,9 @@ class GetitemsMethod extends MethodClass
         }
 
         $getitems = [];
-        while (!$result->EOF) {
+        while ($result->next()) {
             [$id, $rating, $numratings] = $result->fields;
             $getitems[$id] = ['numratings' => $numratings, 'rating' => $rating];
-            $result->MoveNext();
         }
         $result->close();
 

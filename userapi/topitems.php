@@ -103,10 +103,9 @@ class TopitemsMethod extends MethodClass
         }
 
         $topitems = [];
-        while (!$result->EOF) {
+        while ($result->next()) {
             [$id, $rating] = $result->fields;
             $topitems[] = ['itemid' => $id, 'rating' => $rating];
-            $result->MoveNext();
         }
         $result->close();
         return $topitems;

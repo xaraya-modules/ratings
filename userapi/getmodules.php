@@ -58,10 +58,9 @@ class GetmodulesMethod extends MethodClass
         }
 
         $modlist = [];
-        while (!$result->EOF) {
+        while ($result->next()) {
             [$modid, $itemtype, $numitems, $numratings] = $result->fields;
             $modlist[$modid][$itemtype] = ['items' => $numitems, 'ratings' => $numratings];
-            $result->MoveNext();
         }
         $result->close();
 

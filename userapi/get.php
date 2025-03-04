@@ -89,7 +89,7 @@ class GetMethod extends MethodClass
                   AND itemtype = ?";
         $bindvars = [$modid, $itemid, $itemtype];
         $result = & $dbconn->Execute($query, $bindvars);
-        if (!$result || $result->EOF) {
+        if (!$result || !$result->first()) {
             return;
         }
         $rating = $result->fields[0];

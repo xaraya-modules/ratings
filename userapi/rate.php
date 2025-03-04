@@ -139,7 +139,7 @@ class RateMethod extends MethodClass
             return;
         }
 
-        if (!$result->EOF) {
+        if ($result->first()) {
             // Update current rating
             [$id, $currating, $numratings] = $result->fields;
             $result->close();
