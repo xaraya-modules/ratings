@@ -14,9 +14,7 @@
 namespace Xaraya\Modules\Ratings;
 
 use Xaraya\Modules\InstallerClass;
-use xarDB;
 use xarTableDDL;
-use xarModVars;
 use xarModHooks;
 use xarPrivileges;
 use xarMasks;

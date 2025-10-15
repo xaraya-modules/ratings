@@ -15,13 +15,7 @@ namespace Xaraya\Modules\Ratings\UserGui;
 use Xaraya\Modules\Ratings\UserGui;
 use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
-use xarVar;
-use xarSec;
-use xarMod;
-use xarSession;
-use xarController;
 use sys;
-use BadParameterException;
 
 sys::import('xaraya.modules.method');
 

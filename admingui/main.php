@@ -14,11 +14,7 @@ namespace Xaraya\Modules\Ratings\AdminGui;
 
 use Xaraya\Modules\Ratings\AdminGui;
 use Xaraya\Modules\MethodClass;
-use xarSecurity;
-use xarModVars;
-use xarController;
 use sys;
-use BadParameterException;
 
 sys::import('xaraya.modules.method');
 

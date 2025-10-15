@@ -14,13 +14,6 @@ namespace Xaraya\Modules\Ratings\UserApi;
 
 use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
-use xarMod;
-use xarSecurity;
-use xarDB;
-use xarModVars;
-use xarUser;
-use xarModUserVars;
-use xarSession;
 use sys;
 use Exception;
 

@@ -14,8 +14,6 @@ namespace Xaraya\Modules\Ratings\AdminApi;
 
 use Xaraya\Modules\Ratings\AdminApi;
 use Xaraya\Modules\MethodClass;
-use xarDB;
-use xarModVars;
 use sys;
 use Exception;
 

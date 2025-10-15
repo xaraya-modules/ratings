@@ -15,10 +15,6 @@ namespace Xaraya\Modules\Ratings\AdminGui;
 use Xaraya\Modules\Ratings\AdminGui;
 use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
-use xarSecurity;
-use xarVar;
-use xarMod;
-use xarController;
 use sys;
 use Exception;
 
