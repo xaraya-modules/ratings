@@ -14,8 +14,6 @@
 
 namespace Xaraya\Modules\Ratings;
 
-use xarDB;
-
 class Tables
 {
     /**
@@ -27,11 +25,10 @@ class Tables
      * @return  $xartable array
      * @todo    nothing
     */
-    public function __invoke(?string $prefix = null)
+    public function __invoke(string $prefix = 'xar')
     {
         // Initialise table array
         $xartable = [];
-        $prefix ??= xarDB::getPrefix();
         // Name for ratings database entities
         $xartable['ratings'] = $prefix . '_ratings';
         $xartable['ratings_likes'] = $prefix . '_ratings_likes';
