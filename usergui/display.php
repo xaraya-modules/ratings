@@ -158,9 +158,9 @@ class DisplayMethod extends MethodClass
         }
         if (isset($data['rawrating'])) {
             // Set the cached variable if requested
-            if ($this->var()->isCached('Hooks.ratings', 'save') &&
-                $this->var()->getCached('Hooks.ratings', 'save') == true) {
-                $this->var()->setCached('Hooks.ratings', 'value', $data['rawrating']);
+            if ($this->mem()->has('Hooks.ratings', 'save') &&
+                $this->mem()->get('Hooks.ratings', 'save') == true) {
+                $this->mem()->set('Hooks.ratings', 'value', $data['rawrating']);
             }
 
             // Display current rating
