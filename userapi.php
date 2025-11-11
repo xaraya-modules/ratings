@@ -12,9 +12,6 @@
 namespace Xaraya\Modules\Ratings;
 
 use Xaraya\Modules\UserApiClass;
-use sys;
-
-sys::import('xaraya.modules.userapi');
 
 /**
  * Handle the ratings user API

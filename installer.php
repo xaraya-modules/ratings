@@ -19,10 +19,7 @@ use xarModHooks;
 use xarPrivileges;
 use xarMasks;
 use xarMod;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.installer');
 
 /**
  * Handle module installer functions
@@ -67,7 +64,6 @@ class Installer extends InstallerClass
         $dbconn = $this->db()->getConn();
         $xartable = & $this->db()->getTables();
         // Load Table Maintainance API
-        sys::import('xaraya.tableddl');
         // Create table
         $fields = ['id' => ['type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true],
             'module_id' => ['type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'],

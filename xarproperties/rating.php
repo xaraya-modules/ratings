@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ratings Module
  *
@@ -16,7 +17,6 @@
  * @package dynamicdata
  *
  */
-sys::import("modules.base.xarproperties.floatbox");
 
 class RatingProperty extends FloatBoxProperty
 {
@@ -88,8 +88,8 @@ class RatingProperty extends FloatBoxProperty
                         'admin',
                         'update',
                         ['modname'  => $this->mod()->getName($this->objectref->moduleid),
-                                                            'itemtype' => $this->objectref->itemtype,
-                                                            'objectid' => $this->objectref->itemid, ]
+                            'itemtype' => $this->objectref->itemtype,
+                            'objectid' => $this->objectref->itemid, ]
                     );
                 } else {
                     // get the hitcount for this item
@@ -98,8 +98,8 @@ class RatingProperty extends FloatBoxProperty
                         'user',
                         'get',
                         ['modname'  => $this->mod()->getName($this->objectref->moduleid),
-                                                            'itemtype' => $this->objectref->itemtype,
-                                                            'objectid' => $this->objectref->itemid, ]
+                            'itemtype' => $this->objectref->itemtype,
+                            'objectid' => $this->objectref->itemid, ]
                     );
                 }
                 if (empty($this->hitcache)) {
@@ -117,8 +117,8 @@ class RatingProperty extends FloatBoxProperty
                     'user',
                     'getitems',
                     ['modid'    => $this->objectref->moduleid,
-                                                        'itemtype' => $this->objectref->itemtype,
-                                                        'itemids'  => $this->objectref->itemids, ]
+                        'itemtype' => $this->objectref->itemtype,
+                        'itemids'  => $this->objectref->itemids, ]
                 );
                 if (empty($this->hitcache)) {
                     $this->hitcache = [];
@@ -188,8 +188,8 @@ class RatingProperty extends FloatBoxProperty
             'admin',
             'delete',
             ['modname'  => $this->mod()->getName($this->objectref->moduleid),
-                              'itemtype' => $this->objectref->itemtype,
-                              'objectid' => $itemid, ]
+                'itemtype' => $this->objectref->itemtype,
+                'objectid' => $itemid, ]
         );
         return true;
     }

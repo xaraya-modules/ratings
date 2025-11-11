@@ -11,13 +11,9 @@
 
 namespace Xaraya\Modules\Ratings\UserGui;
 
-
 use Xaraya\Modules\Ratings\UserGui;
 use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings user rate function
@@ -49,7 +45,8 @@ class RateMethod extends MethodClass
         }
 
         // Pass to API
-        $newrating = $userapi->rate(['modname'    => $modname,
+        $newrating = $userapi->rate(
+            ['modname'    => $modname,
                 'itemtype'   => $itemtype,
                 'itemid'     => $itemid,
                 'rating'     => $rating, ]

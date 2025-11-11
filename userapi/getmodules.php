@@ -11,12 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\UserApi;
 
-
 use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings userapi getmodules function

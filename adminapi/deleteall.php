@@ -11,14 +11,10 @@
 
 namespace Xaraya\Modules\Ratings\AdminApi;
 
-
 use Xaraya\Modules\Ratings\AdminApi;
 use Xaraya\Modules\MethodClass;
 use xarModHooks;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings adminapi deleteall function

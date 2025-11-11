@@ -11,14 +11,10 @@
 
 namespace Xaraya\Modules\Ratings\AdminGui;
 
-
 use Xaraya\Modules\Ratings\AdminGui;
 use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings admin view function
@@ -118,7 +114,8 @@ class ViewMethod extends MethodClass
             }
 
             $data['modid'] = $modid;
-            $data['moditems'] = $userapi->getitems(['modid' => $modid,
+            $data['moditems'] = $userapi->getitems(
+                ['modid' => $modid,
                     'itemtype' => $itemtype,
                     'sort' => $sort, ]
             );

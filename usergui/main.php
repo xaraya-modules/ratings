@@ -11,12 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\UserGui;
 
-
 use Xaraya\Modules\Ratings\UserGui;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings user main function

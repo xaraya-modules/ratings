@@ -11,13 +11,9 @@
 
 namespace Xaraya\Modules\Ratings\UserApi;
 
-
 use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings userapi get function
@@ -42,8 +38,8 @@ class GetMethod extends MethodClass
         extract($args);
 
         // Argument check
-        if ((!isset($modname)) ||
-            (!isset($itemid))) {
+        if ((!isset($modname))
+            || (!isset($itemid))) {
             $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 $this->ml('module name or item id'),

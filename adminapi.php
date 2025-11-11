@@ -12,9 +12,6 @@
 namespace Xaraya\Modules\Ratings;
 
 use Xaraya\Modules\AdminApiClass;
-use sys;
-
-sys::import('xaraya.modules.adminapi');
 
 /**
  * Handle the ratings admin API

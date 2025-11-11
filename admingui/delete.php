@@ -11,14 +11,10 @@
 
 namespace Xaraya\Modules\Ratings\AdminGui;
 
-
 use Xaraya\Modules\Ratings\AdminGui;
 use Xaraya\Modules\Ratings\AdminApi;
 use Xaraya\Modules\MethodClass;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings admin delete function
@@ -81,7 +77,8 @@ class DeleteMethod extends MethodClass
         if (!$this->sec()->confirmAuthKey()) {
             return;
         }
-        if (!$adminapi->delete(['modid' => $modid,
+        if (!$adminapi->delete(
+            ['modid' => $modid,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
                 'confirm' => $confirm, ]

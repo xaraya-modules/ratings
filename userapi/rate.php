@@ -11,13 +11,9 @@
 
 namespace Xaraya\Modules\Ratings\UserApi;
 
-
 use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
 use Exception;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings userapi rate function
@@ -43,9 +39,9 @@ class RateMethod extends MethodClass
         extract($args);
 
         // Argument check
-        if ((!isset($modname)) ||
-            (!isset($itemid)) ||
-            (!isset($rating) || !is_numeric($rating) || $rating < 0 || $rating > 100)) {
+        if ((!isset($modname))
+            || (!isset($itemid))
+            || (!isset($rating) || !is_numeric($rating) || $rating < 0 || $rating > 100)) {
             $msg = $this->ml(
                 'Invalid #(1) for #(2) function #(3)() in module #(4)',
                 $this->ml('value'),
@@ -193,8 +189,8 @@ class RateMethod extends MethodClass
             }
         }
         // CHECKME: find some cleaner way to update the page cache if necessary
-        if (function_exists('xarOutputFlushCached') &&
-            $this->mod('cachemanager')->getVar('FlushOnNewRating')) {
+        if (function_exists('xarOutputFlushCached')
+            && $this->mod('cachemanager')->getVar('FlushOnNewRating')) {
             $modinfo = $this->mod()->getInfo($modid);
             // this may not be agressive enough flushing for all sites
             // we could flush "$modinfo[name]-" to remove all output cache associated with a module

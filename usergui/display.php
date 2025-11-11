@@ -11,13 +11,9 @@
 
 namespace Xaraya\Modules\Ratings\UserGui;
 
-
 use Xaraya\Modules\Ratings\UserGui;
 use Xaraya\Modules\Ratings\UserApi;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings user display function
@@ -143,7 +139,8 @@ class DisplayMethod extends MethodClass
 
         // Run API function
         // Bug 6160 Use getitems at first, then get if we get weird results
-        $rating = $userapi->getitems($args
+        $rating = $userapi->getitems(
+            $args
         );
         // Select the way to get the rating
         if (!empty($rating[$itemid])) {
@@ -152,14 +149,15 @@ class DisplayMethod extends MethodClass
         } else {
             // Use old fashioned way
             $args['itemid'] = $itemid;
-            $data['rawrating'] = $userapi->get($args
+            $data['rawrating'] = $userapi->get(
+                $args
             );
             $data['numratings'] = 0;
         }
         if (isset($data['rawrating'])) {
             // Set the cached variable if requested
-            if ($this->mem()->has('Hooks.ratings', 'save') &&
-                $this->mem()->get('Hooks.ratings', 'save') == true) {
+            if ($this->mem()->has('Hooks.ratings', 'save')
+                && $this->mem()->get('Hooks.ratings', 'save') == true) {
                 $this->mem()->set('Hooks.ratings', 'value', $data['rawrating']);
             }
 

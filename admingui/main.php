@@ -11,12 +11,8 @@
 
 namespace Xaraya\Modules\Ratings\AdminGui;
 
-
 use Xaraya\Modules\Ratings\AdminGui;
 use Xaraya\Modules\MethodClass;
-use sys;
-
-sys::import('xaraya.modules.method');
 
 /**
  * ratings admin main function
