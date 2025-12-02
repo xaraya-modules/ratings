@@ -13,7 +13,6 @@ namespace Xaraya\Modules\Ratings\AdminApi;
 
 use Xaraya\Modules\Ratings\AdminApi;
 use Xaraya\Modules\MethodClass;
-use xarModHooks;
 use Exception;
 
 /**
@@ -80,7 +79,7 @@ class DeleteallMethod extends MethodClass
         }
 
         // hmmm, I think we'll skip calling more hooks here... :-)
-        //xarModHooks::call('item', 'delete', '', '');
+        //$this->mod()->callHooks('item', 'delete', '', '');
 
         // TODO: delete user votes with $this->mod()->delVar("$modname:$itemtype:$itemid");
 

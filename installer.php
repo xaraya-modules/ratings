@@ -18,7 +18,6 @@ use xarTableDDL;
 use xarModHooks;
 use xarPrivileges;
 use xarMasks;
-use xarMod;
 use Exception;
 
 /**
@@ -296,7 +295,7 @@ class Installer extends InstallerClass
                 // clean up double hook registrations
                 xarModHooks::unregister('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
                 xarModHooks::register('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
-                $hookedmodules = xarMod::apiFunc(
+                $hookedmodules = $this->mod()->apiFunc(
                     'modules',
                     'admin',
                     'gethookedmodules',
@@ -305,7 +304,7 @@ class Installer extends InstallerClass
                 if (isset($hookedmodules) && is_array($hookedmodules)) {
                     foreach ($hookedmodules as $modname => $value) {
                         foreach ($value as $itemtype => $val) {
-                            xarMod::apiFunc(
+                            $this->mod()->apiFunc(
                                 'modules',
                                 'admin',
                                 'enablehooks',
@@ -321,7 +320,7 @@ class Installer extends InstallerClass
             case '1.2.1':
                 // Set up shownum modvar, including for existing hooked modules
                 $this->mod()->setVar('shownum', 1);
-                $hookedmodules = xarMod::apiFunc(
+                $hookedmodules = $this->mod()->apiFunc(
                     'modules',
                     'admin',
                     'gethookedmodules',
@@ -333,7 +332,7 @@ class Installer extends InstallerClass
                         if (!isset($value[0])) {
                             // Get the list of all item types for this module (if any)
                             try {
-                                $mytypes = xarMod::apiFunc($modname, 'user', 'getitemtypes');
+                                $mytypes = $this->mod()->apiFunc($modname, 'user', 'getitemtypes');
                             } catch (Exception $e) {
                                 $mytypes = [];
                             }
@@ -388,6 +387,6 @@ class Installer extends InstallerClass
         )) {
             return false;
         }
-        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => 'ratings']);
+        return $this->mod()->apiFunc('modules', 'admin', 'standarddeinstall', ['module' => 'ratings']);
     }
 }

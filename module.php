@@ -14,7 +14,7 @@ namespace Xaraya\Modules\Ratings;
 use Xaraya\Modules\ModuleClass;
 
 /**
- * Get ratings module classes via xarMod::getModule()
+ * Get ratings module classes via xar::mod()->getModule()
  */
 class Module extends ModuleClass
 {
