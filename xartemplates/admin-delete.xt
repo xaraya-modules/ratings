@@ -24,7 +24,7 @@
         <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
         <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
             <div class="xar-form-input-wrapper-after">
-                <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+                <input type="submit" name="confirm" value="#$xar->ml('Confirm')#" />
             </div>
         </form>
     </div>

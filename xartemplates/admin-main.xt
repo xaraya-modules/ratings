@@ -4,7 +4,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <xar:var name="label">Official Icon</xar:var>
-        <img src="#xarTpl::getImage('module-generic.png','base')#" class="xar-module-icon" alt="#$label#" width="96" height="96"/>
+        <img src="#$xar->tpl()->getImage('module-generic.png','base')#" class="xar-module-icon" alt="#$label#" width="96" height="96"/>
         <h2>
             Overview
         </h2>
@@ -60,11 +60,11 @@
         </p>
         <ul>
             <li>
-                Ratings Extension page at <a title="#xarML('Ratings Module - Xaraya Extension 41')#" href="http://www.xaraya.com/index.php/release/41.html">Xaraya Extension and Releases</a>.
+                Ratings Extension page at <a title="#$xar->ml('Ratings Module - Xaraya Extension 41')#" href="http://www.xaraya.com/index.php/release/41.html">Xaraya Extension and Releases</a>.
                  Click on Version History tab at the bottom to get the latest release information.
             </li>
             <li>
-                Related tutorials and documentation on Ratings found at <a href="http://www.xaraya.com/index.php/keywords/ratings/" title="#xarML('Related documentation on Ratings')#">Xaraya Documentation.</a>
+                Related tutorials and documentation on Ratings found at <a href="http://www.xaraya.com/index.php/keywords/ratings/" title="#$xar->ml('Related documentation on Ratings')#">Xaraya Documentation.</a>
             </li>
         </ul>
         <p class="xar-sub">
