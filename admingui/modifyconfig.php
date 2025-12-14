@@ -152,8 +152,7 @@ class ModifyconfigMethod extends MethodClass
 
                         $isvalid = $data['module_settings']->checkInput();
                         if (!$isvalid) {
-                            $data['context'] ??= $this->getContext();
-                            return $this->tpl()->module('eventhub', 'admin', 'modifyconfig', $data);
+                            return $data;
                         } else {
                             $itemid = $data['module_settings']->updateItem();
                         }
